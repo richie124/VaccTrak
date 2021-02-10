@@ -47,16 +47,16 @@ public class VtController {
     }
 
     // Returns vaccine center table
-    @GetMapping("/getByState")
-    public Map<String, List<Integer>> getByState() {
+    @GetMapping("/getVaccNumbersByState")
+    public Map<String, List<Integer>> getVaccNumbersByState() {
         return VtSi.getByStates();
     }
-//
-//    // Returns a list of rounds for the specified game, sorted by time
-//    @GetMapping("/rounds/{id}")
-//    public List<Round> findRoundById(@PathVariable int id) {
-//        return VtSi.findRoundById(id);
-//    }
+
+    // Returns a list of rounds for the specified game, sorted by time
+    @GetMapping("/VaccCenter/{id}")
+    public VaccCenter findRoundById(@PathVariable int id) {
+        return VtSi.getVaccCenterById(id);
+    }
 
     // Returns a specific game based on ID
     @GetMapping()
@@ -66,7 +66,8 @@ public class VtController {
 }
 // Get all --- done :)
 // get by vacc center
-// get vaccination centers by state --- in progress
+// get vaccination centers by state
+// Get single and double doses by state --- returns a jsonified map
 
 // Create vacc center --- done :)
 // update single/double doses

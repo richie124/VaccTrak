@@ -9,4 +9,6 @@ public interface VtDao {
     public VaccCenter createVaccCenter(VaccCenter vaccCenter);
 
     public List<VaccCenter> getAllVaccCenters();
+
+    public VaccCenter getVaccCenterById(int id);
 }
