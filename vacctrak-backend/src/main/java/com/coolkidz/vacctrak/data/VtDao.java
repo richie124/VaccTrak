@@ -11,4 +11,6 @@ public interface VtDao {
     public List<VaccCenter> getAllVaccCenters();
 
     public VaccCenter getVaccCenterById(int id);
+
+    public List<VaccCenter> getVaccCenterByState(String stateAbbr);
 }

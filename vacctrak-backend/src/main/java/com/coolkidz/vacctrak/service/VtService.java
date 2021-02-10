@@ -55,4 +55,9 @@ public class VtService implements VtServiceInterface {
     public VaccCenter getVaccCenterById(int id) {
         return vtDao.getVaccCenterById(id);
     }
+
+    @Override
+    public List<VaccCenter> getVaccCenterByState(String stateAbbr) {
+        return vtDao.getVaccCenterByState(stateAbbr);
+    }
 }

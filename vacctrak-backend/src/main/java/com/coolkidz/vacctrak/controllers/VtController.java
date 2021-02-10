@@ -58,6 +58,12 @@ public class VtController {
         return VtSi.getVaccCenterById(id);
     }
 
+    // Returns a list of rounds for the specified game, sorted by time
+    @GetMapping("/AllVaccCenters/{StateAbbr}")
+    public List<VaccCenter> findRoundById(@PathVariable String StateAbbr) {
+        return VtSi.getVaccCenterByState(StateAbbr);
+    }
+
     // Returns a specific game based on ID
     @GetMapping()
     public String Welcome() {
@@ -65,8 +71,8 @@ public class VtController {
     }
 }
 // Get all --- done :)
-// get by vacc center
-// get vaccination centers by state
+// get by vacc center --- Done :)
+// get vaccination centers by state ---
 // Get single and double doses by state --- returns a jsonified map
 
 // Create vacc center --- done :)

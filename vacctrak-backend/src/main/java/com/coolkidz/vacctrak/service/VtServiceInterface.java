@@ -15,6 +15,8 @@ public interface VtServiceInterface {
 
     public VaccCenter getVaccCenterById(int id);
 
+    public List<VaccCenter> getVaccCenterByState(String stateAbbr);
+
 
 
 }
