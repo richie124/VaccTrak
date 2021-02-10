@@ -41,7 +41,7 @@ public class VtController {
 //    }
 
     // Returns vaccine center table
-    @GetMapping("/getAll")
+    @GetMapping("/getAllVaccCenters")
     public List<VaccCenter> getAll() {
         return VtSi.getAllVaccCenters();
     }

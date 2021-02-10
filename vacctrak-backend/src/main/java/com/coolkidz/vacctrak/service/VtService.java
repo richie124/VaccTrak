@@ -22,6 +22,6 @@ public class VtService implements VtServiceInterface {
 
     @Override
     public List<VaccCenter> getAllVaccCenters() {
-        return null;
+        return vtDao.getAllVaccCenters();
     }
 }
