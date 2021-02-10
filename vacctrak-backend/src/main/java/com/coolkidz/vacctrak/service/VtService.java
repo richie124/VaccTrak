@@ -2,8 +2,9 @@ package com.coolkidz.vacctrak.service;
 
 import com.coolkidz.vacctrak.data.VtDao;
 import com.coolkidz.vacctrak.models.VaccCenter;
-import com.coolkidz.vacctrak.models.VaccCenter;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class VtService implements VtServiceInterface {
@@ -15,7 +16,12 @@ public class VtService implements VtServiceInterface {
     }
 
     @Override
-    public VaccCenter createVaccCenter() {
+    public VaccCenter createVaccCenter(VaccCenter newVaccCenter) {
+        return vtDao.createVaccCenter(newVaccCenter);
+    }
+
+    @Override
+    public List<VaccCenter> getAllVaccCenters() {
         return null;
     }
 }

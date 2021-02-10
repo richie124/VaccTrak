@@ -19,11 +19,11 @@ public class VtController {
         this.VtSi = VtSi;
     }
 
-//    @PostMapping("/begin")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public VaccCenter createVaccCenter(@RequestBody VtServiceInterface VtSi) {
-//        return VtSi.createVaccCenter();
-//    }
+    @PostMapping("/createVaccCenter")
+    @ResponseStatus(HttpStatus.CREATED)
+    public VaccCenter createVaccCenter(@RequestBody VaccCenter newVaccCenter) {
+        return VtSi.createVaccCenter(newVaccCenter);
+    }
 //
 //    // User enters gameId and guess
 //    // Sends user's guess, returns round
@@ -39,12 +39,12 @@ public class VtController {
 //    public Game findById(@PathVariable int id) {
 //        return VtSi.findById(id);
 //    }
-//
-////    // Returns a list of all games, with answer nulled if game status is not true (completed)
-////    @GetMapping("/game")
-////    public List<Game> all() {
-////        return serviceInterface.allGames();
-////    }
+
+    // Returns vaccine center table
+    @GetMapping("/getAll")
+    public List<VaccCenter> getAll() {
+        return VtSi.getAllVaccCenters();
+    }
 //
 //    // Returns a list of rounds for the specified game, sorted by time
 //    @GetMapping("/rounds/{id}")

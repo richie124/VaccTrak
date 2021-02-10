@@ -2,8 +2,12 @@ package com.coolkidz.vacctrak.service;
 
 import com.coolkidz.vacctrak.models.VaccCenter;
 
+import java.util.List;
+
 public interface VtServiceInterface {
 
-    public VaccCenter createVaccCenter();
+    public VaccCenter createVaccCenter(VaccCenter newVaccCenter);
+
+    public List<VaccCenter> getAllVaccCenters();
 
 }
