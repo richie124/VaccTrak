@@ -54,6 +54,7 @@ public class VtDbDao implements VtDao {
         final String sql = "SELECT * FROM VaccineSites;";
         return jdbc.query(sql, new VaccCenterMapper());
     }
+    
 
     @Override
     public VaccCenter getVaccCenterById(int id) {
@@ -65,6 +66,27 @@ public class VtDbDao implements VtDao {
     public List<VaccCenter> getVaccCenterByState(String stateAbbr) {
         final String sql = "SELECT * FROM VaccineSites WHERE StateAbbreviation=?;";
         return jdbc.query(sql, new VaccCenterMapper(), stateAbbr);
+    }
+
+    // NEED TO TEST OUT UPDATE
+    @Override
+    public boolean update(VaccCenter vaccCenter) {
+        final String sql = "UPDATE VacCenter SET "
+                + "NumFirstVaccine = ? "
+                + "NumSecondVaccine = ? "
+                + "WHERE ID = ?;";
+
+        return jdbc.update(sql,
+                vaccCenter.getSingleDoses(),
+                vaccCenter.getDoubleDoses(),
+                vaccCenter.getId()) > 0;
+    }
+
+    // NEED TO TEST OUT DELETE
+    @Override
+    public void delete(VaccCenter vaccCenter) {
+        final String sql = "DELETE FROM VaccineSites WHERE VacCenter = ?;";
+        jdbc.update(sql, vaccCenter.getName());
     }
 
     private static final class VaccCenterMapper implements RowMapper<VaccCenter> {
