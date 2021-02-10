@@ -1,15 +1,10 @@
 package com.coolkidz.vacctrak.service;
 
 import com.coolkidz.vacctrak.data.VtDao;
-import com.coolkidz.vacctrak.models.StateVaccs;
 import com.coolkidz.vacctrak.models.VaccCenter;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import java.util.List;
+import java.util.*;
 
 @Service
 public class VtService implements VtServiceInterface {
@@ -31,29 +26,29 @@ public class VtService implements VtServiceInterface {
     }
 
     @Override
-    public List<StateVaccs> getByStates() {
+    public Map<String, List<Integer>> getByStates() {
 
-        List<StateVaccs> stateVaccs = new ArrayList<StateVaccs>();
+        Map<String, List<Integer>> stateVaccs = new HashMap<String, List<Integer>>();
 
         List<VaccCenter> allVaccSites = vtDao.getAllVaccCenters();
         for ( int i = 0; i < allVaccSites.size(); i++ ) {
             // Get a vaccCenter from the list pulled from DB
             VaccCenter tempCenter = allVaccSites.get(i);
+            String tempState = tempCenter.getState();
 
-            // CHECK IF STATE IS ALREADY IN LIST stateVaccs<>
+            if(!stateVaccs.containsKey(tempState)) {
+                stateVaccs.put(tempState, new ArrayList<Integer>(Arrays.asList(tempCenter.getSingleDoses(), tempCenter.getDoubleDoses())));
+            } else {
+                List<Integer> tempDoses = stateVaccs.get(tempState);
+                int newSingleDoses = tempDoses.get(0) + tempCenter.getSingleDoses();
+                int newDoubleDoses = tempDoses.get(1) + tempCenter.getDoubleDoses();
+                tempDoses.set(0, newSingleDoses);
+                tempDoses.set(1, newDoubleDoses);
 
+                stateVaccs.put(tempState, tempDoses);
 
-            // If State is not in list stateVaccs<>
-            // create a stateObejct to insert into stateVaccs list
-            StateVaccs tempState = new StateVaccs();
+            }
 
-
-            tempState.setStateName(tempCenter.getState());
-
-
-
-
-            stateVaccs.add(tempState);
         }
 
 

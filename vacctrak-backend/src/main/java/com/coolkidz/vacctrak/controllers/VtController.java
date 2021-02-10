@@ -1,13 +1,12 @@
 package com.coolkidz.vacctrak.controllers;
 
-import com.coolkidz.vacctrak.data.VtDao;
-import com.coolkidz.vacctrak.models.StateVaccs;
 import com.coolkidz.vacctrak.models.VaccCenter;
 import com.coolkidz.vacctrak.service.VtServiceInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/VaccTrak")
@@ -49,7 +48,7 @@ public class VtController {
 
     // Returns vaccine center table
     @GetMapping("/getByState")
-    public List<StateVaccs> getByState() {
+    public Map<String, List<Integer>> getByState() {
         return VtSi.getByStates();
     }
 //
@@ -66,8 +65,8 @@ public class VtController {
     }
 }
 // Get all --- done :)
-// get by vacc center --- in progress
-// get by state
+// get by vacc center
+// get vaccination centers by state --- in progress
 
 // Create vacc center --- done :)
 // update single/double doses
