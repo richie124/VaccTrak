@@ -51,7 +51,8 @@ public class VtDbDao implements VtDao {
 
     @Override
     public List<VaccCenter> getAllVaccCenters() {
-        return null;
+        final String sql = "SELECT * FROM VaccineSites;";
+        return jdbc.query(sql, new GamesMapper());
     }
 
     private static final class GamesMapper implements RowMapper<VaccCenter> {
