@@ -1,6 +1,7 @@
 package com.coolkidz.vacctrak.controllers;
 
 import com.coolkidz.vacctrak.data.VtDao;
+import com.coolkidz.vacctrak.models.StateVaccs;
 import com.coolkidz.vacctrak.models.VaccCenter;
 import com.coolkidz.vacctrak.service.VtServiceInterface;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,12 @@ public class VtController {
     public List<VaccCenter> getAll() {
         return VtSi.getAllVaccCenters();
     }
+
+    // Returns vaccine center table
+    @GetMapping("/getByState")
+    public List<StateVaccs> getByState() {
+        return VtSi.getByStates();
+    }
 //
 //    // Returns a list of rounds for the specified game, sorted by time
 //    @GetMapping("/rounds/{id}")
@@ -58,10 +65,10 @@ public class VtController {
         return "Welcome to VaccTrak, powered by CoolKidz™";
     }
 }
-// Get all
-// get by vacc center
+// Get all --- done :)
+// get by vacc center --- in progress
 // get by state
 
-// Create vacc center
+// Create vacc center --- done :)
 // update single/double doses
 // delete a vacc center
