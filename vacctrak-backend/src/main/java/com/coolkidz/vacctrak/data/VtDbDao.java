@@ -52,10 +52,16 @@ public class VtDbDao implements VtDao {
     @Override
     public List<VaccCenter> getAllVaccCenters() {
         final String sql = "SELECT * FROM VaccineSites;";
-        return jdbc.query(sql, new GamesMapper());
+        return jdbc.query(sql, new VaccCenterMapper());
     }
 
-    private static final class GamesMapper implements RowMapper<VaccCenter> {
+    @Override
+    public VaccCenter getVaccCenterById(int id) {
+        final String sql = "SELECT * FROM VaccineSites WHERE iD=?;";
+        return jdbc.queryForObject(sql, new VaccCenterMapper(), id);
+    }
+
+    private static final class VaccCenterMapper implements RowMapper<VaccCenter> {
 
         @Override
         public VaccCenter mapRow(ResultSet rs, int index) throws SQLException {

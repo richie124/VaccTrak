@@ -46,12 +46,13 @@ public class VtService implements VtServiceInterface {
                 tempDoses.set(1, newDoubleDoses);
 
                 stateVaccs.put(tempState, tempDoses);
-
             }
-
         }
+        return stateVaccs;
+    }
 
-
-        return null;
+    @Override
+    public VaccCenter getVaccCenterById(int id) {
+        return vtDao.getVaccCenterById(id);
     }
 }

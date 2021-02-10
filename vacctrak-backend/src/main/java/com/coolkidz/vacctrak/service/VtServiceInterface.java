@@ -13,4 +13,8 @@ public interface VtServiceInterface {
 
     public Map<String, List<Integer>> getByStates();
 
+    public VaccCenter getVaccCenterById(int id);
+
+
+
 }
