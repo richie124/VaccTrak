@@ -19,11 +19,11 @@ public class VtController {
         this.VtSi = VtSi;
     }
 
-    @PostMapping("/begin")
-    @ResponseStatus(HttpStatus.CREATED)
-    public VaccCenter createVaccCenter(@RequestBody VtServiceInterface VtSi) {
-        return VtSi.createVaccCenter();
-    }
+//    @PostMapping("/begin")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public VaccCenter createVaccCenter(@RequestBody VtServiceInterface VtSi) {
+//        return VtSi.createVaccCenter();
+//    }
 //
 //    // User enters gameId and guess
 //    // Sends user's guess, returns round
@@ -55,6 +55,13 @@ public class VtController {
     // Returns a specific game based on ID
     @GetMapping()
     public String Welcome() {
-        return "Welcome to Hangman";
+        return "Welcome to VaccTrak, powered by CoolKidz™";
     }
 }
+// Get all
+// get by vacc center
+// get by state
+
+// Create vacc center
+// update single/double doses
+// delete a vacc center
