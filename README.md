@@ -7,7 +7,7 @@ Steps to get API running:
   <li>Edit "/vacctrak-backend/src/main/resources/application.properties":</li>
   <ul>
     <li>Change username and password to reflect your credentials</li>
-  <ul>
+  </ul>
   <li>Run the Java SpringBoot application in /vacctrak-backend</li>
 </ol>
 
