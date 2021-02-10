@@ -7,7 +7,8 @@ public class VaccCenter {
     private String address;
     private String city;
     private String state;
-    private int zipcode;
+    private String zipcode;
+    private String phoneNumber;
     private int singleDoses;
     private int doubleDoses;
 
@@ -51,12 +52,20 @@ public class VaccCenter {
         return this.state;
     }
 
-    public void zipcode(int zipcode) {
-        this.singleDoses = zipcode;
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 
-    public int getZipcode() {
+    public String getZipcode() {
         return this.zipcode;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return this.phoneNumber;
     }
 
     public void setSingleDoses(int singleDoses) {
