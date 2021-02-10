@@ -1,9 +1,9 @@
 package com.coolkidz.vacctrak.service;
 
-import com.coolkidz.vacctrak.models.StateVaccs;
 import com.coolkidz.vacctrak.models.VaccCenter;
 
 import java.util.List;
+import java.util.Map;
 
 public interface VtServiceInterface {
 
@@ -11,6 +11,6 @@ public interface VtServiceInterface {
 
     public List<VaccCenter> getAllVaccCenters();
 
-    public List<StateVaccs> getByStates();
+    public Map<String, List<Integer>> getByStates();
 
 }

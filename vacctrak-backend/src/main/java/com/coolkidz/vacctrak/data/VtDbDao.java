@@ -23,7 +23,7 @@ public class VtDbDao implements VtDao {
     @Override
     public VaccCenter createVaccCenter(VaccCenter vaccCenter) {
 
-        final String sql = "INSERT INTO VaccineSites(vacCenter, Address, City, State, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine) VALUES(?,?,?,?,?,?,?,?);";
+        final String sql = "INSERT INTO VaccineSites(vacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine) VALUES(?,?,?,?,?,?,?,?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbc.update((Connection conn) -> {
@@ -64,7 +64,7 @@ public class VtDbDao implements VtDao {
             vaccCenter.setName(rs.getString("VacCenter"));
             vaccCenter.setAddress(rs.getString("Address"));
             vaccCenter.setCity(rs.getString("City"));
-            vaccCenter.setState(rs.getString("State"));
+            vaccCenter.setState(rs.getString("StateAbbreviation"));
             vaccCenter.setZipcode(rs.getString("ZipCode"));
             vaccCenter.setPhoneNumber(rs.getString("PhoneNumber"));
             vaccCenter.setSingleDoses(rs.getInt("NumFirstVaccine"));
