@@ -4,6 +4,6 @@ import com.coolkidz.vacctrak.models.VaccCenter;
 
 public interface VtServiceInterface {
 
-    public VaccCenter createVaccCenter();
+    public VaccCenter createVaccCenter(VaccCenter newVaccCenter);
 
 }

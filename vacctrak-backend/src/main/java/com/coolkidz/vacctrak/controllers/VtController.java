@@ -19,11 +19,11 @@ public class VtController {
         this.VtSi = VtSi;
     }
 
-//    @PostMapping("/begin")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public VaccCenter createVaccCenter(@RequestBody VtServiceInterface VtSi) {
-//        return VtSi.createVaccCenter();
-//    }
+    @PostMapping("/createVaccCenter")
+    @ResponseStatus(HttpStatus.CREATED)
+    public VaccCenter createVaccCenter(@RequestBody VaccCenter newVaccCenter) {
+        return VtSi.createVaccCenter(newVaccCenter);
+    }
 //
 //    // User enters gameId and guess
 //    // Sends user's guess, returns round
