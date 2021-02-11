@@ -162,3 +162,29 @@ VALUES("Luminis Health Doctors Community Medical Center", "8118 Good Luck Road",
 
 
 
+-- USER TEST DATA:
+INSERT INTO USERS(UserName) VALUES("Alissa Cooper");
+INSERT INTO USERS(UserName) VALUES("Madeline Farrell");
+INSERT INTO USERS(UserName) VALUES("Frederick Myers");
+INSERT INTO USERS(UserName) VALUES("Tara Thompson");
+INSERT INTO USERS(UserName) VALUES("Charlotte Russell");
+INSERT INTO USERS(UserName) VALUES("Brianna Cooper");
+INSERT INTO USERS(UserName) VALUES("Jordan Davis");
+INSERT INTO USERS(UserName) VALUES("Derek Fowler");
+INSERT INTO USERS(UserName) VALUES("Rubie Gray");
+INSERT INTO USERS(UserName) VALUES("Lyndon Reed");
+INSERT INTO USERS(UserName) VALUES("Kelvin West");
+INSERT INTO USERS(UserName) VALUES("Max Stewart");
+
+
+-- insert test data to permissions table
+INSERT INTO Permissions(UserId, VacCenterId) VALUES(1, 12);
+INSERT INTO Permissions(UserId, VacCenterId) VALUES(2, 11);
+INSERT INTO Permissions(UserId, VacCenterId) VALUES(3, 10);
+INSERT INTO Permissions(UserId, VacCenterId) VALUES(4, 9);
+INSERT INTO Permissions(UserId, VacCenterId) VALUES(5, 8);
+INSERT INTO Permissions(UserId, VacCenterId) VALUES(6, 7);
+INSERT INTO Permissions(UserId, VacCenterId) VALUES(7, 6);
+INSERT INTO Permissions(UserId, VacCenterId) VALUES(8, 5);
+INSERT INTO Permissions(UserId, VacCenterId) VALUES(9, 4);
+INSERT INTO Permissions(UserId, VacCenterId) VALUES(10, 3);
