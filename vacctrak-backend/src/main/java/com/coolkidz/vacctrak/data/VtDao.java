@@ -13,4 +13,8 @@ public interface VtDao {
     public VaccCenter getVaccCenterById(int id);
 
     public List<VaccCenter> getVaccCenterByState(String stateAbbr);
+
+    boolean update(VaccCenter vaccCenter);
+
+    void delete(VaccCenter vaccCenter);
 }
