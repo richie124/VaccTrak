@@ -2,6 +2,7 @@ package com.coolkidz.vacctrak.service;
 
 import com.coolkidz.vacctrak.data.VtDao;
 import com.coolkidz.vacctrak.models.VaccCenter;
+import com.coolkidz.vacctrak.models.VtUser;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -70,4 +71,11 @@ public class VtService implements VtServiceInterface {
     public boolean deleteById(int id) {
         return vtDao.deleteById(id);
     }
+
+    @Override
+    public VtUser createUser(VtUser user) {
+        return null;
+    }
+
+
 }

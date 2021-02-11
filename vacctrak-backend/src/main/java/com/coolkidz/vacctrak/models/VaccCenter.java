@@ -8,6 +8,8 @@ public class VaccCenter {
     private String city;
     private String state;
     private String zipcode;
+    private String latitude;
+    private String longitude;
     private String phoneNumber;
     private int singleDoses;
     private int doubleDoses;
@@ -58,6 +60,22 @@ public class VaccCenter {
 
     public String getZipcode() {
         return this.zipcode;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLatitude() {
+        return this.latitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLongitude() {
+        return this.longitude;
     }
 
     public void setPhoneNumber(String phoneNumber) {

@@ -71,7 +71,6 @@ public class VtController {
         return VtSi.getVaccCenterByState(StateAbbr);
     }
 
-    // Returns a specific game based on ID
     @GetMapping()
     public String Welcome() {
         return "Welcome to VaccTrak, powered by CoolKidz™";
@@ -84,8 +83,8 @@ public class VtController {
 // Get single and double doses by state --- returns a jsonified map
 
 // Create vacc center --- done :)
-// update single/double doses
-// delete a vacc center
+// update single/double doses --- :)
+// delete a vacc center --- :)
 
 // Remove code to take json of addresses and add coordinates
 
@@ -104,4 +103,5 @@ public class VtController {
 // Blockers: Gathering up the data is time consuming
 //           We're having difficulties mapping the centers on google map api becuase it only takes lat/long
 //
-//
+// LOGIN
+// pass in user id, vacCenter id
