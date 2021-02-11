@@ -65,7 +65,7 @@ var markers2 = [
 
 function App() {
   const {isLoaded, loadError} = useLoadScript({
-    googleMapsApiKey: "AIzaSyAp1BrMA7-YofbC3iJapScTWCpI8GmZm-w",
+    googleMapsApiKey: "",
     libraries: libraries
   })
   // const [markers, setMarkers] = useState([]);
