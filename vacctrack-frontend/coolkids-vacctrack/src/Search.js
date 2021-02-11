@@ -9,7 +9,7 @@ import {
 } from '@reach/combobox';
 import '@reach/combobox/styles.css';
 
-function Search({getLatLngFromAddress, panTo}) {
+function Search({getLatLngFromAddress, panTo, handleShow}) {
   const {
     ready, 
     value, 
@@ -50,6 +50,9 @@ function Search({getLatLngFromAddress, panTo}) {
         </ComboboxList>
       </ComboboxPopover>
     </Combobox>
+    <div className="center">
+      Don't see your vaccination site listed? <button id="clickHere" onClick={handleShow}>Click here!</button>
+    </div>
   </div>
   );
 }

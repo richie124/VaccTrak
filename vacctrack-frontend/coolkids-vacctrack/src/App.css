@@ -70,3 +70,13 @@
 .locate img {
   width: 50px;
 }
+
+.center {
+  text-align: center;
+}
+
+#clickHere {
+  text-shadow: 1px 1px 4px blue;
+  background: none;
+  border: none;
+}

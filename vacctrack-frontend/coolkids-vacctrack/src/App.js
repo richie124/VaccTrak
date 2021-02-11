@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useRef, useCallback, useEffect} from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import Search from './Search';
@@ -9,6 +9,8 @@ import {
   getGeocode,
   getLatLng
 } from "use-places-autocomplete";
+import { Modal, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SERVICE_URL = "http://localhost:8080/VaccTrak";
 
@@ -27,63 +29,28 @@ const options = {
   zoomControl: true
 }
 
-var markers2 = [
-    {
-        "id": 52,
-        "name": "Six Flags America Theme Park",
-        "address": "13710 Central Ave.",
-        "city": "Upper Marlboro",
-        "state": "ND",
-        "zipcode": " 20721",
-        "phoneNumber": "N/A",
-        "singleDoses": 10887,
-        "doubleDoses": 10478
-    },
-    {
-        "id": 53,
-        "name": "Holy Cross Hospital",
-        "address": "1500 Forest Glen Road",
-        "city": "Silver Spring",
-        "state": "MD",
-        "zipcode": " 20910",
-        "phoneNumber": "N/A",
-        "singleDoses": 3234,
-        "doubleDoses": 3434
-    },
-    {
-        "id": 54,
-        "name": "Luminis Health Doctors Community Medical Center",
-        "address": "8118 Good Luck Road",
-        "city": " Lanham",
-        "state": "MD",
-        "zipcode": "20706",
-        "phoneNumber": "N/A",
-        "singleDoses": 8766,
-        "doubleDoses": 7654
-    }
-]
-
 
 function App() {
   const {isLoaded, loadError} = useLoadScript({
-    googleMapsApiKey: "AIzaSyAp1BrMA7-YofbC3iJapScTWCpI8GmZm-w",
+    googleMapsApiKey: "",
     libraries: libraries
   })
-  // const [markers, setMarkers] = useState([]);
+
   const [selected, setSelected] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    fetch(SERVICE_URL + "/getAllVaccCenters")
+      .then(data => data.json())
+      .then(data => setMarkers(data));
+      //getData(markers2).then(data => setMarkers(data));
+  }, []);
 
   const mapRef = useRef();
   const onMapLoad = useCallback(
     (map) => {
       mapRef.current = map;
-      // fetch(SERVICE_URL + "/getAllVaccCenters")
-      // .then(data => data.json())
-      // .then(data => data)
-      // .then(getData(temp).then(data => setMarkers(data)));
-      
-      getData(markers2).then(data => setMarkers(data));
-
     },
     []
   )
@@ -122,18 +89,27 @@ function App() {
         }
   }, []);
 
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading maps";
 
-  return (<div>
-    <Create getVaccCenterLatLong={getVaccCenterLatLong}/>
-  </div>)
 
   return (<div>
 
     <img src="logo.png" alt="logo" id="logo"/>
-    <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress}/>
+    <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleShow}/>
     <Locate panTo={panTo} />
+
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Vaccination Site</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Create getVaccCenterLatLong={getVaccCenterLatLong} setMarkers={setMarkers} markers={markers} SERVICE_URL={SERVICE_URL} handleClose={handleClose}/>
+        </Modal.Body>
+    </Modal>
 
     <GoogleMap 
     mapContainerStyle={mapContainerStyle}
@@ -144,7 +120,7 @@ function App() {
       {markers.map((marker, i) => 
         <Marker 
           key={i} 
-          position={{lat: marker.lat, lng: marker.lng}}
+          position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)}}
           onClick={() => {
             setSelected(marker);
           }}
@@ -153,10 +129,10 @@ function App() {
 
       {selected ? (
         <InfoWindow 
-        position={{lat: selected.lat, lng: selected.lng}} 
+        position={{lat: parseFloat(selected.latitude), lng: parseFloat(selected.longitude)}} 
         onCloseClick={() => setSelected(null)}>
           <div>
-            <h3>{selected.name}</h3>
+            <h6>{selected.name}</h6>
             <div>
               <div>
                 1st Dose: {selected.singleDoses}
