@@ -12,8 +12,8 @@ create table VaccineSites (
     PhoneNumber varchar(15) DEFAULT 'N/A',
     NumFirstVaccine int8, 
     NumSecondVaccine int8,
-    Latitude real,
-    Longitude real
+    Latitude varchar(30),
+    Longitude varchar(30)
 );
 
 create table Users (
