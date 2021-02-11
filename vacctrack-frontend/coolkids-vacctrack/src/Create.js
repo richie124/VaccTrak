@@ -25,14 +25,14 @@ function Create ({ getVaccCenterLatLong }) {
 
     const { lat, lng } = await getVaccCenterLatLong(vaccCenter);
     setQuery(`"${name}", "${address}", "${city}", "${state}", "${zipCode}", "${phone}", ${firstVacc}, ${secondVacc}, "${lat}", "${lng}";`);
-    // resetName();
-    // resetAddress();
-    // resetState();
-    // resetZipCode();
-    // resetCity();
-    // resetPhone();
-    // resetFirstVacc();
-    // resetSecondVacc();
+    resetName();
+    resetAddress();
+    resetState();
+    resetZipCode();
+    resetCity();
+    resetPhone();
+    resetFirstVacc();
+    resetSecondVacc();
   }
 
   return (
