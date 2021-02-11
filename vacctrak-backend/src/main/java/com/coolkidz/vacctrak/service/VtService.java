@@ -60,4 +60,14 @@ public class VtService implements VtServiceInterface {
     public List<VaccCenter> getVaccCenterByState(String stateAbbr) {
         return vtDao.getVaccCenterByState(stateAbbr);
     }
+
+    @Override
+    public boolean updateVaccDoses(VaccCenter vaccCenter) {
+        return vtDao.update(vaccCenter);
+    }
+
+    @Override
+    public boolean deleteById(int id) {
+        return vtDao.deleteById(id);
+    }
 }

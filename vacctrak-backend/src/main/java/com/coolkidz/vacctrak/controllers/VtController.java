@@ -3,6 +3,7 @@ package com.coolkidz.vacctrak.controllers;
 import com.coolkidz.vacctrak.models.VaccCenter;
 import com.coolkidz.vacctrak.service.VtServiceInterface;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,24 +22,26 @@ public class VtController {
 
     @PostMapping("/createVaccCenter")
     @ResponseStatus(HttpStatus.CREATED)
-    public VaccCenter createVaccCenter(@RequestBody VaccCenter newVaccCenter) {
-        return VtSi.createVaccCenter(newVaccCenter);
+    public VaccCenter createVaccCenter(@RequestBody VaccCenter vaccCenter) {
+        return VtSi.createVaccCenter(vaccCenter);
     }
-//
-//    // User enters gameId and guess
-//    // Sends user's guess, returns round
-//    @PostMapping("/guess")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Round createRound(@RequestBody Round round) {
-//        return VtSi.createRound(round);
-//    }
-//
-//
-//    // Returns a specific game based on ID
-//    @GetMapping("/game/{id}")
-//    public Game findById(@PathVariable int id) {
-//        return VtSi.findById(id);
-//    }
+
+    @PutMapping("/UpdateDoses")
+    public ResponseEntity updateVaccDoses(@RequestBody VaccCenter vaccCenter) {
+        ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
+        if (VtSi.updateVaccDoses(vaccCenter)) {
+            response = new ResponseEntity(HttpStatus.OK);
+        }
+        return response;
+    }
+
+    @DeleteMapping("/DeleteVaccCenter/{id}")
+    public ResponseEntity deleteVaccCenter(@PathVariable int id){
+        if (VtSi.deleteById(id)) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
 
     // Returns vaccine center table
     @GetMapping("/getAllVaccCenters")
@@ -70,11 +73,27 @@ public class VtController {
         return "Welcome to VaccTrak, powered by CoolKidz™";
     }
 }
+
 // Get all --- done :)
 // get by vacc center --- Done :)
-// get vaccination centers by state ---
+// get vaccination centers by state --- done :)
 // Get single and double doses by state --- returns a jsonified map
 
 // Create vacc center --- done :)
 // update single/double doses
 // delete a vacc center
+
+// What to submit to David:
+// just the react files we created
+// just the java files we created + pom
+
+// fun level: 6
+// stress level: 3
+// project completion 35%
+// Blockrs: Gathering up the data is time consuming
+//          We're having difficulties mapping the centers on google map api becuase it only takes lat/long
+//
+// Gathered a bunch of data for real sites
+// built out most of the backend for the public centric portal
+// Mostly have the map api up and running
+//

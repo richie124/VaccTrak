@@ -17,6 +17,8 @@ public interface VtServiceInterface {
 
     public List<VaccCenter> getVaccCenterByState(String stateAbbr);
 
+    public boolean updateVaccDoses(VaccCenter vaccCenter);
 
+    public boolean deleteById(int id);
 
 }
