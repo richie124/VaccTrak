@@ -57,8 +57,12 @@ public class VtController {
 
     // Returns a list of rounds for the specified game, sorted by time
     @GetMapping("/VaccCenter/{id}")
-    public VaccCenter findRoundById(@PathVariable int id) {
-        return VtSi.getVaccCenterById(id);
+    public ResponseEntity<VaccCenter> findRoundById(@PathVariable int id) {
+        VaccCenter result = VtSi.getVaccCenterById(id);
+        if (result == null) {
+            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(result);
     }
 
     // Returns a list of rounds for the specified game, sorted by time
@@ -83,17 +87,21 @@ public class VtController {
 // update single/double doses
 // delete a vacc center
 
+// Remove code to take json of addresses and add coordinates
+
 // What to submit to David:
 // just the react files we created
 // just the java files we created + pom
 
+
+// Where we're at:
+    // Gathered a bunch of data for real sites
+    // built out most of the backend for the public centric portal
+    // Mostly have the map api up and running
 // fun level: 6
 // stress level: 3
 // project completion 35%
-// Blockrs: Gathering up the data is time consuming
-//          We're having difficulties mapping the centers on google map api becuase it only takes lat/long
+// Blockers: Gathering up the data is time consuming
+//           We're having difficulties mapping the centers on google map api becuase it only takes lat/long
 //
-// Gathered a bunch of data for real sites
-// built out most of the backend for the public centric portal
-// Mostly have the map api up and running
 //
