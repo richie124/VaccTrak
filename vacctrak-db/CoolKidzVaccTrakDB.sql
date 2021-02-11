@@ -18,7 +18,8 @@ create table VaccineSites (
 
 create table Users (
 	UserId int primary key auto_increment,
-	UserName varchar(70) not null
+	UserName varchar(25) not null,
+    Password varchar(64) not null
 );
 
 create table Permissions(

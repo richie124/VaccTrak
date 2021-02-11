@@ -163,18 +163,18 @@ VALUES("Luminis Health Doctors Community Medical Center", "8118 Good Luck Road",
 
 
 -- USER TEST DATA:
-INSERT INTO USERS(UserName) VALUES("Alissa Cooper");
-INSERT INTO USERS(UserName) VALUES("Madeline Farrell");
-INSERT INTO USERS(UserName) VALUES("Frederick Myers");
-INSERT INTO USERS(UserName) VALUES("Tara Thompson");
-INSERT INTO USERS(UserName) VALUES("Charlotte Russell");
-INSERT INTO USERS(UserName) VALUES("Brianna Cooper");
-INSERT INTO USERS(UserName) VALUES("Jordan Davis");
-INSERT INTO USERS(UserName) VALUES("Derek Fowler");
-INSERT INTO USERS(UserName) VALUES("Rubie Gray");
-INSERT INTO USERS(UserName) VALUES("Lyndon Reed");
-INSERT INTO USERS(UserName) VALUES("Kelvin West");
-INSERT INTO USERS(UserName) VALUES("Max Stewart");
+INSERT INTO USERS(UserName) VALUES("Al_Cooper");
+INSERT INTO USERS(UserName) VALUES("Mad_Farrell");
+INSERT INTO USERS(UserName) VALUES("Fred_Myers");
+INSERT INTO USERS(UserName) VALUES("T_Thompson");
+INSERT INTO USERS(UserName) VALUES("Char_Russell");
+INSERT INTO USERS(UserName) VALUES("Bri_Cooper");
+INSERT INTO USERS(UserName) VALUES("J_Davis");
+INSERT INTO USERS(UserName) VALUES("D_Fowler");
+INSERT INTO USERS(UserName) VALUES("R_Gray");
+INSERT INTO USERS(UserName) VALUES("L_Reed");
+INSERT INTO USERS(UserName) VALUES("K_West");
+INSERT INTO USERS(UserName) VALUES("Max_Stewart");
 
 
 -- insert test data to permissions table
