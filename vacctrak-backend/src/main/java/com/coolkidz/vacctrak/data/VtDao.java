@@ -16,5 +16,5 @@ public interface VtDao {
 
     boolean update(VaccCenter vaccCenter);
 
-    void delete(VaccCenter vaccCenter);
+    boolean deleteById(int id);
 }

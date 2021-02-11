@@ -71,9 +71,9 @@ public class VtDbDao implements VtDao {
     // NEED TO TEST OUT UPDATE
     @Override
     public boolean update(VaccCenter vaccCenter) {
-        final String sql = "UPDATE VacCenter SET "
-                + "NumFirstVaccine = ? "
-                + "NumSecondVaccine = ? "
+        final String sql = "UPDATE VaccineSites SET "
+                + "NumFirstVaccine = ?, "
+                + "NumSecondVaccine = ?, "
                 + "WHERE ID = ?;";
 
         return jdbc.update(sql,
@@ -84,9 +84,9 @@ public class VtDbDao implements VtDao {
 
     // NEED TO TEST OUT DELETE
     @Override
-    public void delete(VaccCenter vaccCenter) {
-        final String sql = "DELETE FROM VaccineSites WHERE VacCenter = ?;";
-        jdbc.update(sql, vaccCenter.getName());
+    public boolean deleteById(int id) {
+        final String sql = "DELETE FROM VaccineSites WHERE ID = ?;";
+        return jdbc.update(sql, id) > 0;
     }
 
     private static final class VaccCenterMapper implements RowMapper<VaccCenter> {
