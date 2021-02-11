@@ -224,6 +224,64 @@ VALUES("Frankfort Clinic", "669 Chamberlin Avenue", "Frankfort", "KY", "40601", 
 INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
 VALUES("Mercy Health - Paducah Medical Pavilion", "225 Medical Center Dr.", "Paducah", "KY", "42003", "(866) 624-0366", 4344, 3433, "37.0540351", "-88.644109");
 
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Oakdale Community Hospital", "130 N Hospital Drive", "Abbeville ", "LA", "71463", "(318) 335‐3700", 5354, 5435,"29.973190307617188", "-92.10697174072266");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Walgreens #09753", "1125 Marchand Dr.", "Donaldsonville ", "LA", "70346", 43422, 43232,"30.09663963317871", "-90.98690032958984");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Bunkie General Hospital", "427 Evergreen Street", "Bunkie ", "LA", "71322", "(318) 305‐0002", 9595, 4535,"30.9526294", "-92.1757372");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Kroger Pharmacy #533", "9484 Ellerbe Road", "Shreveport ", "LA", "71106", "(318) 517‐6973", 3423, 5455,"32.3956069", "-93.7265067");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Dry's Pharmacy", "4344 Church Street", "Zachary", "LA", "70791", "(225) 654‐1175", 6454, 4545,"30.6503133", "-91.158344");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Delaune's Pharmacy", "308 N Lewis Street", "New Iberia", "LA", "70563", "(337) 364‐7671", 42343, 43432,"30.006547927856445", "-91.79637145996094");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Bridgton Hospital", "10 Hospital Dr.", "Bridgton", "ME", "04009", "207-520-2917", 43344, 43455,"44.074813", "-70.819714");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Millinocket Regional Hospital", "200 Somerset St.", "Millinocket", "ME", "04462", "207-723-7225", 235432, 434232,"45.651153564453125", "-68.71385955810547");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("St. Joseph Hospital", "360 Broadway", "Bangor", "ME", "04401", "207-907-3441", 848347, 83645,"44.8135873", "-68.771991");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Penobscot Community Health Center", "103 Maine Ave.", "Bangor", "ME", "04401", "207-794-7243", 85764, 84564,"44.8012578", "-68.8077378");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Northern Light Primary Care", " 234 State Street Northern Light Health Center", "Brewer", "ME", "04412", "207-204-8551", 745635, 736556,"44.786138", "-68.753381");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Heywood Healthcare at Polish American Citizen's Club (PACC)", "171 Kendall Pond Rd W", "Gardner", "MA", "01440", "(978) 630-8304", 846445, 87876, "42.564388", "-72.020862");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("CVS", "978 Boylston St.", "Newton", "MA", "02461", "(617) 244-0821", 4234, 4345,"42.3189431", "-71.2110294");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES (" Pediatric Health Care Associates", "10 Centennial Drive", "Peabody", "MA", "01960", "(978) 818-6792", 4345, 4345, "42.5261827", "-70.9529896");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Family Practice Group, PC", "11 Water Street, Suite 1-A", "Arlington", "MA", "02476", "(781) 287-1158", 44455, 34355,"42.41659164428711", "-71.15449523925781");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Lauderdale County Health Department", "5224 Vally St.", "Meridian", "MS", "39307", " (601) 693-2451", 8765, 8763, "32.363537", "-88.7311749");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Rochester Community Pharmacy - Elton Hills Drive", "120 Elton Hills Ln NW", "Rochester", "MN", "55901", "(507) 322-6124", 3444, 4543, "44.041343688964844", "-92.46350860595703");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Appleton Area Health", "30 S Behl St.", "Appleton", "MN", "56208", "(320) 289-1580", 2454, 45344,"45.19847106933594", "-96.00924682617188");
+
+INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude)
+VALUES ("Rainy Lake Medical Center Clinic", "1400 US-71", "International Falls", "MN", "56649", "(218) 598-5163", 9475, 9474, "48.593257904052734", "-93.43212890625");
+
+
 
 -- USER TEST DATA:
 INSERT INTO USERS(UserName, Password) VALUES("Al_Cooper", "password1");
