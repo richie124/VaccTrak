@@ -59,7 +59,7 @@ public class VtDbDao implements VtDao {
 
     @Override
     public VaccCenter getVaccCenterById(int id) {
-        final String sql = "SELECT * FROM VaccineSites WHERE ID=?;";
+        final String sql = "SELECT * FROM VaccineSites WHERE VacCenterId=?;";
         return jdbc.queryForObject(sql, new VaccCenterMapper(), id);
     }
 
@@ -86,7 +86,7 @@ public class VtDbDao implements VtDao {
     // NEED TO TEST OUT DELETE
     @Override
     public boolean deleteById(int id) {
-        final String sql = "DELETE FROM VaccineSites WHERE ID = ?;";
+        final String sql = "DELETE FROM VaccineSites WHERE VacCenterId = ?;";
         return jdbc.update(sql, id) > 0;
     }
 
@@ -95,7 +95,7 @@ public class VtDbDao implements VtDao {
         @Override
         public VaccCenter mapRow(ResultSet rs, int index) throws SQLException {
             VaccCenter vaccCenter = new VaccCenter();
-            vaccCenter.setId(rs.getInt("ID"));
+            vaccCenter.setId(rs.getInt("VacCenterId"));
             vaccCenter.setName(rs.getString("VacCenter"));
             vaccCenter.setAddress(rs.getString("Address"));
             vaccCenter.setCity(rs.getString("City"));
@@ -104,6 +104,8 @@ public class VtDbDao implements VtDao {
             vaccCenter.setPhoneNumber(rs.getString("PhoneNumber"));
             vaccCenter.setSingleDoses(rs.getInt("NumFirstVaccine"));
             vaccCenter.setDoubleDoses(rs.getInt("NumSecondVaccine"));
+            vaccCenter.setZipcode(rs.getString("Latitude"));
+            vaccCenter.setPhoneNumber(rs.getString("Longitude"));
             return vaccCenter;
         }
     }
