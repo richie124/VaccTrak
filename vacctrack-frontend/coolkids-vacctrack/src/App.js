@@ -4,6 +4,7 @@ import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps
 import mapStyles from './mapStyles';
 import Search from './Search';
 import Locate from './Locate';
+import Create from './Create';
 import {
   getGeocode,
   getLatLng
@@ -65,7 +66,7 @@ var markers2 = [
 
 function App() {
   const {isLoaded, loadError} = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyAp1BrMA7-YofbC3iJapScTWCpI8GmZm-w",
     libraries: libraries
   })
   // const [markers, setMarkers] = useState([]);
@@ -75,14 +76,13 @@ function App() {
   const mapRef = useRef();
   const onMapLoad = useCallback(
     (map) => {
-      var temp;
       mapRef.current = map;
       // fetch(SERVICE_URL + "/getAllVaccCenters")
       // .then(data => data.json())
       // .then(data => data)
       // .then(getData(temp).then(data => setMarkers(data)));
       
-      getData(markers2).then(data => console.log(data));
+      getData(markers2).then(data => setMarkers(data));
 
     },
     []
@@ -124,6 +124,10 @@ function App() {
 
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading maps";
+
+  return (<div>
+    <Create getVaccCenterLatLong={getVaccCenterLatLong}/>
+  </div>)
 
   return (<div>
 
