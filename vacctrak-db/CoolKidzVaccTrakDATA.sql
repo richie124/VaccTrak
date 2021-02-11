@@ -164,5 +164,3 @@ VALUES("Luminis Health Doctors Community Medical Center", "8118 Good Luck Road",
 
 
 
-
-
