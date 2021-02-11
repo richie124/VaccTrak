@@ -73,7 +73,7 @@ public class VtDbDao implements VtDao {
     public boolean update(VaccCenter vaccCenter) {
         final String sql = "UPDATE VaccineSites SET "
                 + "NumFirstVaccine = ?, "
-                + "NumSecondVaccine = ?, "
+                + "NumSecondVaccine = ? "
                 + "WHERE ID = ?;";
 
         return jdbc.update(sql,
