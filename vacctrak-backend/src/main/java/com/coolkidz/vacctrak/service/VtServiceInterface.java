@@ -1,6 +1,7 @@
 package com.coolkidz.vacctrak.service;
 
 import com.coolkidz.vacctrak.models.VaccCenter;
+import com.coolkidz.vacctrak.models.VtUser;
 
 import java.util.List;
 import java.util.Map;
@@ -20,5 +21,8 @@ public interface VtServiceInterface {
     public boolean updateVaccDoses(VaccCenter vaccCenter);
 
     public boolean deleteById(int id);
+
+
+    public VtUser createUser(VtUser user);
 
 }
