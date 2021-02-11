@@ -1,6 +1,7 @@
 package com.coolkidz.vacctrak.data;
 
 import com.coolkidz.vacctrak.models.VaccCenter;
+import com.coolkidz.vacctrak.models.VtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -88,6 +89,54 @@ public class VtDbDao implements VtDao {
     public boolean deleteById(int id) {
         final String sql = "DELETE FROM VaccineSites WHERE VacCenterId = ?;";
         return jdbc.update(sql, id) > 0;
+    }
+
+
+
+    @Override
+    public VtUser createUser(VtUser vtUser) {
+
+//        final String sql = "INSERT INTO VaccineSites(vacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude) VALUES(?,?,?,?,?,?,?,?,?,?);";        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+//
+//        jdbc.update((Connection conn) -> {
+//
+//            PreparedStatement statement = conn.prepareStatement(
+//                    sql,
+//                    Statement.RETURN_GENERATED_KEYS);
+//
+//            statement.setString(1, vtUser.getName());
+//            statement.setString(2, vtUser.getAddress());
+//            statement.setString(3, vtUser.getCity());
+//            statement.setString(4, vtUser.getState());
+//            statement.setString(5, vtUser.getZipcode());
+//            statement.setString(6, vtUser.getPhoneNumber());
+//            statement.setInt(7, vaccCenter.getSingleDoses());
+//            statement.setInt(8, vaccCenter.getDoubleDoses());
+//            statement.setString(9, vaccCenter.getLatitude());
+//            statement.setString(10, vaccCenter.getLongitude());
+//            return statement;
+//
+//        }, keyHolder);
+//
+//        vaccCenter.setId(keyHolder.getKey().intValue());
+
+        return null;
+    }
+
+
+    private static final class UsersMapper implements RowMapper<VtUser> {
+
+        @Override
+        public VtUser mapRow(ResultSet rs, int index) throws SQLException {
+            VtUser vtUser = new VtUser();
+            vtUser.setId(rs.getInt("UserId"));
+            vtUser.setfName(rs.getString("FirstName"));
+            vtUser.setlName(rs.getString("LastName"));
+            vtUser.setUserName(rs.getString("UserName"));
+            vtUser.setHashedPassword(rs.getString("Password"));
+            vtUser.setVaccCenterId(rs.getInt("NumSecondVaccine"));
+            return vtUser;
+        }
     }
 
     private static final class VaccCenterMapper implements RowMapper<VaccCenter> {

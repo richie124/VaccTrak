@@ -1,6 +1,7 @@
 package com.coolkidz.vacctrak.data;
 
 import com.coolkidz.vacctrak.models.VaccCenter;
+import com.coolkidz.vacctrak.models.VtUser;
 
 import java.util.List;
 
@@ -17,4 +18,7 @@ public interface VtDao {
     boolean update(VaccCenter vaccCenter);
 
     boolean deleteById(int id);
+
+
+    public VtUser createUser(VtUser vtUser);
 }
