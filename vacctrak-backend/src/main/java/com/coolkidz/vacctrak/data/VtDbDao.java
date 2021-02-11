@@ -104,8 +104,8 @@ public class VtDbDao implements VtDao {
             vaccCenter.setPhoneNumber(rs.getString("PhoneNumber"));
             vaccCenter.setSingleDoses(rs.getInt("NumFirstVaccine"));
             vaccCenter.setDoubleDoses(rs.getInt("NumSecondVaccine"));
-            vaccCenter.setZipcode(rs.getString("Latitude"));
-            vaccCenter.setPhoneNumber(rs.getString("Longitude"));
+            vaccCenter.setLatitude(rs.getString("Latitude"));
+            vaccCenter.setLongitude(rs.getString("Longitude"));
             return vaccCenter;
         }
     }
