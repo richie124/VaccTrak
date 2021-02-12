@@ -6,7 +6,7 @@ public class VtUser {
     private String fName;
     private String lName;
     private String userName;
-    private String hashedPassword;
+    private String password;
     private int VaccCenterId;
 
     public void setId(int id) {
@@ -41,12 +41,12 @@ public class VtUser {
         return this.userName;
     }
 
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getHashedPassword() {
-        return this.hashedPassword;
+    public String getPassword() {
+        return this.password;
     }
 
     public void setVaccCenterId(int VaccCenterId) {

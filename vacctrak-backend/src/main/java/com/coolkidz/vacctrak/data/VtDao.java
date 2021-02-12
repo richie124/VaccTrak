@@ -20,5 +20,4 @@ public interface VtDao {
     boolean deleteById(int id);
 
 
-    public VtUser createUser(VtUser vtUser);
 }

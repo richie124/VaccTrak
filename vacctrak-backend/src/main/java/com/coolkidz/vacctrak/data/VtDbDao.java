@@ -24,7 +24,8 @@ public class VtDbDao implements VtDao {
     @Override
     public VaccCenter createVaccCenter(VaccCenter vaccCenter) {
 
-        final String sql = "INSERT INTO VaccineSites(vacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude) VALUES(?,?,?,?,?,?,?,?,?,?);";        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        final String sql = "INSERT INTO VaccineSites(vacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude) VALUES(?,?,?,?,?,?,?,?,?,?);";
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbc.update((Connection conn) -> {
 
@@ -76,7 +77,7 @@ public class VtDbDao implements VtDao {
         final String sql = "UPDATE VaccineSites SET "
                 + "NumFirstVaccine = ?, "
                 + "NumSecondVaccine = ? "
-                + "WHERE ID = ?;";
+                + "WHERE VacCenterId = ?;";
 
         return jdbc.update(sql,
                 vaccCenter.getSingleDoses(),
@@ -92,52 +93,6 @@ public class VtDbDao implements VtDao {
     }
 
 
-
-    @Override
-    public VtUser createUser(VtUser vtUser) {
-
-//        final String sql = "INSERT INTO VaccineSites(vacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude) VALUES(?,?,?,?,?,?,?,?,?,?);";        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-//
-//        jdbc.update((Connection conn) -> {
-//
-//            PreparedStatement statement = conn.prepareStatement(
-//                    sql,
-//                    Statement.RETURN_GENERATED_KEYS);
-//
-//            statement.setString(1, vtUser.getName());
-//            statement.setString(2, vtUser.getAddress());
-//            statement.setString(3, vtUser.getCity());
-//            statement.setString(4, vtUser.getState());
-//            statement.setString(5, vtUser.getZipcode());
-//            statement.setString(6, vtUser.getPhoneNumber());
-//            statement.setInt(7, vaccCenter.getSingleDoses());
-//            statement.setInt(8, vaccCenter.getDoubleDoses());
-//            statement.setString(9, vaccCenter.getLatitude());
-//            statement.setString(10, vaccCenter.getLongitude());
-//            return statement;
-//
-//        }, keyHolder);
-//
-//        vaccCenter.setId(keyHolder.getKey().intValue());
-
-        return null;
-    }
-
-
-    private static final class UsersMapper implements RowMapper<VtUser> {
-
-        @Override
-        public VtUser mapRow(ResultSet rs, int index) throws SQLException {
-            VtUser vtUser = new VtUser();
-            vtUser.setId(rs.getInt("UserId"));
-            vtUser.setfName(rs.getString("FirstName"));
-            vtUser.setlName(rs.getString("LastName"));
-            vtUser.setUserName(rs.getString("UserName"));
-            vtUser.setHashedPassword(rs.getString("Password"));
-            vtUser.setVaccCenterId(rs.getInt("NumSecondVaccine"));
-            return vtUser;
-        }
-    }
 
     private static final class VaccCenterMapper implements RowMapper<VaccCenter> {
 
