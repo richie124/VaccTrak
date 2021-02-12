@@ -1,4 +1,3 @@
-import React, { useState, useCallback } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useInput } from './hooks/input-hook';
 
@@ -40,12 +39,12 @@ function Create ({ getVaccCenterLatLong, setMarkers, markers, SERVICE_URL, handl
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Add Contact - Success:', data);
+      console.log('Add Center - Success:', data);
       setMarkers([...markers, vaccCenter]);
       handleClose();
     })
     .catch((error) => {
-      console.log('Add Contact - Error:', error);
+      console.log('Add Center - Error:', error);
     });
 
 

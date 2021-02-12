@@ -27,7 +27,8 @@ function Search({getLatLngFromAddress, panTo, handleShow}) {
   });
   return (
     <div className="search">
-    <Combobox onSelect={async (address) => {
+    <Combobox
+      onSelect={async (address) => {
       setValue(address, false);
       clearSuggestions();
 
@@ -50,7 +51,7 @@ function Search({getLatLngFromAddress, panTo, handleShow}) {
         </ComboboxList>
       </ComboboxPopover>
     </Combobox>
-    <div className="center">
+    <div className="center addVaccSite">
       Don't see your vaccination site listed? <button id="clickHere" onClick={handleShow}>Click here!</button>
     </div>
   </div>

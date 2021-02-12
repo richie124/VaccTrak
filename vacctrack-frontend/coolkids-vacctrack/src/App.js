@@ -5,6 +5,7 @@ import mapStyles from './mapStyles';
 import Search from './Search';
 import Locate from './Locate';
 import Create from './Create';
+import AddVacc from './AddVacc'
 import {
   getGeocode,
   getLatLng
@@ -38,13 +39,17 @@ function App() {
 
   const [selected, setSelected] = useState(null);
   const [markers, setMarkers] = useState([]);
-  const [show, setShow] = useState(true);
+  const [newCenterShow, setNewCenterShow] = useState(false);
+  const [addVaccShow, setAddVaccShow] = useState(false);
 
   useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = useCallback(() => {
     fetch(SERVICE_URL + "/getAllVaccCenters")
       .then(data => data.json())
       .then(data => setMarkers(data));
-      //getData(markers2).then(data => setMarkers(data));
   }, []);
 
   const mapRef = useRef();
@@ -55,10 +60,10 @@ function App() {
     []
   )
 
-  const getData = async (vaccList) => {
-    return Promise.all(vaccList.map((vaccCenter) => 
-        getVaccCenterLatLong(vaccCenter)));
-  }
+  // const getData = async (vaccList) => {
+  //   return Promise.all(vaccList.map((vaccCenter) => 
+  //       getVaccCenterLatLong(vaccCenter)));
+  // }
 
   const panTo = useCallback(
   ({lat, lng}) => {
@@ -67,6 +72,11 @@ function App() {
   },
   [],
   )
+
+  const updateMarker = useCallback((updateCenter) => {
+    setSelected(updateCenter);
+    loadData();
+  }, []);
 
   const getVaccCenterLatLong = useCallback(async (vaccCenter) => {
     const address = vaccCenter.address + " " + vaccCenter.city + ", " + vaccCenter.state + " " + vaccCenter.zipcode;
@@ -89,8 +99,10 @@ function App() {
         }
   }, []);
 
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+  const handleNewCenterClose = () => setNewCenterShow(false);
+  const handleNewCenterShow = () => setNewCenterShow(true);
+  const handleAddVaccClose = () => setAddVaccShow(false);
+  const handleAddVaccShow = () => setAddVaccShow(true);
 
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading maps";
@@ -99,15 +111,24 @@ function App() {
   return (<div>
 
     <img src="logo.png" alt="logo" id="logo"/>
-    <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleShow}/>
+    <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
     <Locate panTo={panTo} />
 
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={newCenterShow} onHide={handleNewCenterClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add Vaccination Site</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Create getVaccCenterLatLong={getVaccCenterLatLong} setMarkers={setMarkers} markers={markers} SERVICE_URL={SERVICE_URL} handleClose={handleClose}/>
+          <Create getVaccCenterLatLong={getVaccCenterLatLong} setMarkers={setMarkers} markers={markers} SERVICE_URL={SERVICE_URL} handleClose={handleNewCenterClose}/>
+        </Modal.Body>
+    </Modal>
+
+    <Modal show={addVaccShow} onHide={handleAddVaccClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Vaccinations</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <AddVacc handleClose={handleAddVaccClose} SERVICE_URL={SERVICE_URL} vaccCenter={selected} updateMarker={updateMarker}/>
         </Modal.Body>
     </Modal>
 
@@ -140,8 +161,12 @@ function App() {
               <div>
                 2nd Dose: {selected.doubleDoses}
               </div>
-              <hr />
+              
               Total Vaccinated: {selected.singleDoses + selected.doubleDoses}
+            </div>
+            <hr />
+            <div className="infoEditBar">
+              <button onClick={handleAddVaccShow}>Add Vaccinations</button>
             </div>
           </div>
         </InfoWindow>
