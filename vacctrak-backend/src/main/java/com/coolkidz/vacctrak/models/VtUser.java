@@ -5,6 +5,8 @@ public class VtUser {
     private int id;
     private String fName;
     private String lName;
+    private String userName;
+    private String password;
     private int VaccCenterId;
 
     public void setId(int id) {
@@ -29,6 +31,22 @@ public class VtUser {
 
     public String getlName() {
         return this.lName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 
     public void setVaccCenterId(int VaccCenterId) {

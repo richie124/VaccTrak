@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +25,7 @@ public class UserController {
 
     @PostMapping("/CreateUser")
     @ResponseStatus(HttpStatus.CREATED)
-    public VtUser createVaccCenter(@RequestBody VtUser user) {
+    public VtUser createUser(@RequestBody VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
         return VtSi.createUser(user);
     }
 
