@@ -27,6 +27,9 @@ function Search({getLatLngFromAddress, panTo, handleShow}) {
   });
   return (
     <div className="search">
+      <div className="center addVaccSite">
+        Don't see your vaccination site listed? <button id="clickHere" onClick={handleShow}>Click here!</button>
+      </div>
     <Combobox
       onSelect={async (address) => {
       setValue(address, false);
@@ -34,7 +37,7 @@ function Search({getLatLngFromAddress, panTo, handleShow}) {
 
       try {
         const { lat, lng } = await getLatLngFromAddress(address);
-        panTo({lat, lng});
+        panTo({lat, lng}, 14);
       } catch (error) {
         console.log("error2");
       }
@@ -51,9 +54,6 @@ function Search({getLatLngFromAddress, panTo, handleShow}) {
         </ComboboxList>
       </ComboboxPopover>
     </Combobox>
-    <div className="center addVaccSite">
-      Don't see your vaccination site listed? <button id="clickHere" onClick={handleShow}>Click here!</button>
-    </div>
   </div>
   );
 }

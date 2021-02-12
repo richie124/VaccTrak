@@ -29,11 +29,12 @@ const options = {
   disableDefaultUI: true,
   zoomControl: true
 }
+const startZoom = 4.7;
 
 
 function App() {
   const {isLoaded, loadError} = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyAp1BrMA7-YofbC3iJapScTWCpI8GmZm-w",
     libraries: libraries
   })
 
@@ -41,6 +42,8 @@ function App() {
   const [markers, setMarkers] = useState([]);
   const [newCenterShow, setNewCenterShow] = useState(false);
   const [addVaccShow, setAddVaccShow] = useState(false);
+  const [moreInfoShow, setMoreInfoShow] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -65,13 +68,18 @@ function App() {
   //       getVaccCenterLatLong(vaccCenter)));
   // }
 
+  const returnZoom = useCallback(() => {
+    panTo({lat:center.lat, lng: center.lng}, startZoom);
+  }, [])
+
   const panTo = useCallback(
-  ({lat, lng}) => {
+  ({lat, lng}, zoom) => {
     mapRef.current.panTo({lat, lng});
-    mapRef.current.setZoom(14);
-  },
-  [],
-  )
+    mapRef.current.setZoom(zoom);
+    zoom !== startZoom ? setIsZoomed(true) : setIsZoomed(false);
+    console.log(isZoomed);
+    console.log(zoom);
+  })
 
   const updateMarker = useCallback((updateCenter) => {
     setSelected(updateCenter);
@@ -103,16 +111,20 @@ function App() {
   const handleNewCenterShow = () => setNewCenterShow(true);
   const handleAddVaccClose = () => setAddVaccShow(false);
   const handleAddVaccShow = () => setAddVaccShow(true);
+  const handleMoreInfoShow = () => setMoreInfoShow(true);
+  const handleMoreInfoHide = () => setMoreInfoShow(false);
 
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading maps";
 
 
   return (<div>
+    <div className="navbar-custom">
+      <img src="logo.png" alt="logo" id="logo"/>
+      <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
+      <Locate panTo={panTo} returnZoom={returnZoom} />
+    </div>
 
-    <img src="logo.png" alt="logo" id="logo"/>
-    <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
-    <Locate panTo={panTo} />
 
     <Modal show={newCenterShow} onHide={handleNewCenterClose}>
         <Modal.Header closeButton>
@@ -134,7 +146,7 @@ function App() {
 
     <GoogleMap 
     mapContainerStyle={mapContainerStyle}
-    zoom={4.7}
+    zoom={startZoom}
     center={center}
     options={options}
     onLoad={onMapLoad}>
@@ -143,6 +155,7 @@ function App() {
           key={i} 
           position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)}}
           onClick={() => {
+            panTo({lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)}, 14);
             setSelected(marker);
           }}
         />
@@ -151,9 +164,33 @@ function App() {
       {selected ? (
         <InfoWindow 
         position={{lat: parseFloat(selected.latitude), lng: parseFloat(selected.longitude)}} 
-        onCloseClick={() => setSelected(null)}>
+        onCloseClick={() => {
+          setSelected(null);
+          handleMoreInfoHide();
+          }}>
           <div>
-            <h6>{selected.name}</h6>
+            <div>
+              <h6>{selected.name}</h6>
+              <div className="seeMore">
+                { moreInfoShow ? 
+                  <div id="info">
+                  <div>
+                    {selected.address}
+                  </div>
+                  <div>
+                    {selected.city}, {selected.state} {selected.zipcode}
+                  </div>
+                  <div>
+                    {selected.phoneNumber}
+                  </div>
+                  <button onClick={handleMoreInfoHide} className="moreHide">Hide...</button>
+                </div>
+                :  
+                <button onClick={handleMoreInfoShow} className="moreHide">See more info...</button>
+              }
+              </div>
+            </div>
+            <hr />
             <div>
               <div>
                 1st Dose: {selected.singleDoses}
@@ -166,7 +203,7 @@ function App() {
             </div>
             <hr />
             <div className="infoEditBar">
-              <button onClick={handleAddVaccShow}>Add Vaccinations</button>
+              <Button onClick={handleAddVaccShow}>Add Vaccinations</Button>
             </div>
           </div>
         </InfoWindow>
