@@ -1,6 +1,7 @@
 package com.coolkidz.vacctrak.data;
 
 import com.coolkidz.vacctrak.models.VaccCenter;
+import com.coolkidz.vacctrak.models.VtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -23,7 +24,8 @@ public class VtDbDao implements VtDao {
     @Override
     public VaccCenter createVaccCenter(VaccCenter vaccCenter) {
 
-        final String sql = "INSERT INTO VaccineSites(vacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude) VALUES(?,?,?,?,?,?,?,?,?,?);";        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        final String sql = "INSERT INTO VaccineSites(vacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude) VALUES(?,?,?,?,?,?,?,?,?,?);";
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbc.update((Connection conn) -> {
 
@@ -75,7 +77,7 @@ public class VtDbDao implements VtDao {
         final String sql = "UPDATE VaccineSites SET "
                 + "NumFirstVaccine = ?, "
                 + "NumSecondVaccine = ? "
-                + "WHERE ID = ?;";
+                + "WHERE VacCenterId = ?;";
 
         return jdbc.update(sql,
                 vaccCenter.getSingleDoses(),
@@ -89,6 +91,8 @@ public class VtDbDao implements VtDao {
         final String sql = "DELETE FROM VaccineSites WHERE VacCenterId = ?;";
         return jdbc.update(sql, id) > 0;
     }
+
+
 
     private static final class VaccCenterMapper implements RowMapper<VaccCenter> {
 

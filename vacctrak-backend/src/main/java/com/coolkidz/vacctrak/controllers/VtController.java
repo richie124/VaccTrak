@@ -55,9 +55,9 @@ public class VtController {
         return VtSi.getByStates();
     }
 
-    // Returns a list of rounds for the specified game, sorted by time
+    // returns the response entity with the VaccCenter of the searched for Id
     @GetMapping("/VaccCenter/{id}")
-    public ResponseEntity<VaccCenter> findRoundById(@PathVariable int id) {
+    public ResponseEntity<VaccCenter> findVaccCenterById(@PathVariable int id) {
         VaccCenter result = VtSi.getVaccCenterById(id);
         if (result == null) {
             return new ResponseEntity(null, HttpStatus.NOT_FOUND);
@@ -65,7 +65,7 @@ public class VtController {
         return ResponseEntity.ok(result);
     }
 
-    // Returns a list of rounds for the specified game, sorted by time
+    // Returns a list of all VaccCenters of the searched-for state
     @GetMapping("/AllVaccCenters/{StateAbbr}")
     public List<VaccCenter> findRoundById(@PathVariable String StateAbbr) {
         return VtSi.getVaccCenterByState(StateAbbr);
@@ -105,3 +105,6 @@ public class VtController {
 //
 // LOGIN
 // pass in user id, vacCenter id
+
+// how to add user auth to React and Java Spring Boot
+// if frontend sends userId
