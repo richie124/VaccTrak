@@ -6,6 +6,8 @@ import Locate from './Locate';
 import Create from './Create';
 import AddVacc from './AddVacc';
 import StateNumbers from './StateNumbers'
+import Login from './Login'
+import useToken from './useToken'
 import {
   getGeocode,
   getLatLng
@@ -46,7 +48,9 @@ function App() {
   const [moreInfoShow, setMoreInfoShow] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const [stateChartShow, setStateChartShow] = useState(false);
+  const [loginShow, setLoginShow] = useState(false);
   const [stateData, setStateData] = useState([]);
+  const {token, setToken} = useToken();
 
   useEffect(() => {
     loadData();
@@ -72,11 +76,6 @@ function App() {
     },
     []
   )
-
-  // const getData = async (vaccList) => {
-  //   return Promise.all(vaccList.map((vaccCenter) => 
-  //       getVaccCenterLatLong(vaccCenter)));
-  // }
 
   const returnZoom = useCallback(() => {
     panTo({lat:center.lat, lng: center.lng}, startZoom);
@@ -125,6 +124,8 @@ function App() {
   const handleMoreInfoHide = () => setMoreInfoShow(false);
   const handleStateChartShow = () => setStateChartShow(true);
   const handleStateChartClose = () => setStateChartShow(false);
+  const handleLoginShow = () => setLoginShow(true);
+  const handleLoginClose = () => setLoginShow(false);
 
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading maps";
@@ -136,6 +137,7 @@ function App() {
       <Button onClick={handleStateChartShow} className="stateChartButton"> Numbers by State </Button>
       <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
       <Locate panTo={panTo} returnZoom={returnZoom} />
+      <Button onClick={handleLoginShow} className="loginButton"> Login </Button>
     </div>
 
     <Modal show={stateChartShow} onHide={handleStateChartClose}>
@@ -144,6 +146,15 @@ function App() {
         </Modal.Header>
         <Modal.Body>
           <StateNumbers stateData={stateData}/>
+        </Modal.Body>
+    </Modal>
+
+    <Modal show={loginShow} onHide={handleLoginClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Login setToken={setToken} />
         </Modal.Body>
     </Modal>
 
@@ -224,9 +235,11 @@ function App() {
               Total Vaccinated: {selected.singleDoses + selected.doubleDoses}
             </div>
             <hr />
-            <div className="infoEditBar">
+            { token ? 
+            (<div className="infoEditBar">
               <Button onClick={handleAddVaccShow}>Add Vaccinations</Button>
-            </div>
+            </div>) : null
+            }
           </div>
         </InfoWindow>
       ) : null}

@@ -78,12 +78,20 @@
   z-index: 10;
 }
 
-.stateChartButton {
+.stateChartButton,
+.loginButton {
   position: absolute;
-  top: 1rem;
-  left: 17rem;
+  top: 2rem;
   z-index: 10;
   font-size: small;
+}
+
+.stateChartButton {
+  left: 17rem;
+}
+
+.loginButton {
+  right: 15rem;
 }
 
 .center {
