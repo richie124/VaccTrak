@@ -8,4 +8,6 @@ import java.security.spec.InvalidKeySpecException;
 public interface VtUserDao {
 
     public VtUser createUser(VtUser vtUser) throws InvalidKeySpecException, NoSuchAlgorithmException;
+
+    public boolean validateUser(VtUser vtUser);
 }

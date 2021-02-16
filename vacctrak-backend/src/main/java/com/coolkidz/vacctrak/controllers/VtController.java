@@ -1,5 +1,6 @@
 package com.coolkidz.vacctrak.controllers;
 
+import com.coolkidz.vacctrak.models.StateVaccs;
 import com.coolkidz.vacctrak.models.VaccCenter;
 import com.coolkidz.vacctrak.service.VtServiceInterface;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,7 @@ public class VtController {
 
     // Returns vaccine center table
     @GetMapping("/getVaccNumbersByState")
-    public Map<String, List<Integer>> getVaccNumbersByState() {
+    public List<StateVaccs> getVaccNumbersByState() {
         return VtSi.getByStates();
     }
 

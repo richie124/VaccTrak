@@ -6,15 +6,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.math.BigInteger;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.sql.*;
+import java.util.List;
 
 @Repository
 public class VtDbUserDao implements VtUserDao{
@@ -27,27 +22,75 @@ public class VtDbUserDao implements VtUserDao{
     }
 
     @Override
-    public VtUser createUser(VtUser vtUser) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    @Transactional
+    public VtUser createUser(VtUser vtUser) {
 
-        final String sql = "INSERT INTO Users(UserName, UserPassword) VALUES(?,?);";
-        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        final String querySql = "select * from users where UserName=?;";
+        List<VtUser> users = jdbc.query(querySql, new UsersMapper(), vtUser.getUserName());
 
-        jdbc.update((Connection conn) -> {
+        if (users.size() < 1) {
+            // Insert new user into Users table
+            final String insertSql = "INSERT INTO users(UserName, UserPassword) VALUES(?,?);";
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
-            PreparedStatement statement = conn.prepareStatement(
-                    sql,
-                    Statement.RETURN_GENERATED_KEYS);
+            jdbc.update((Connection conn) -> {
 
-            statement.setString(1, vtUser.getUserName());
-            statement.setString(2, vtUser.getPassword());
-            return statement;
+                PreparedStatement statement = conn.prepareStatement(
+                        insertSql,
+                        Statement.RETURN_GENERATED_KEYS);
 
-        }, keyHolder);
+                statement.setString(1, vtUser.getUserName());
+                statement.setString(2, vtUser.getPassword());
+                return statement;
 
-        vtUser.setId(keyHolder.getKey().intValue());
+            }, keyHolder);
 
+            vtUser.setId(keyHolder.getKey().intValue());
+
+
+            insertPerms(vtUser);
+
+            return vtUser;
+        }
+        vtUser.setUserName("AlreadyTaken");
         return vtUser;
     }
+
+    private void insertPerms(VtUser vtUser) {
+        String[] vaccCenterPerms = vtUser.getVaccCenterAccesses().split(",");
+        for (int i = 0; i < vaccCenterPerms.length; i++) {
+
+            int vaccCenterId = Integer.parseInt(vaccCenterPerms[i]);
+
+            final String insertSql = "INSERT INTO Permissions(UserId, VacCenterId) VALUES(?,?);";
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+
+            jdbc.update((Connection conn) -> {
+
+                PreparedStatement statement = conn.prepareStatement(
+                        insertSql,
+                        Statement.RETURN_GENERATED_KEYS);
+
+                statement.setInt(1, vtUser.getId());
+                statement.setInt(2, vaccCenterId);
+                return statement;
+
+            }, keyHolder);
+
+        }
+    }
+
+    @Override
+    public boolean validateUser(VtUser vtUser) {
+        final String sql = "select UserId from Users where UserId=? and UserPassword=?;";
+        List<VtUser> users = jdbc.query(sql, new UsersMapper(), vtUser.getId(), vtUser.getPassword());
+
+        if (users.size() == 1) {
+            return true;
+        }
+        return false;
+    }
+
 
     private static final class UsersMapper implements RowMapper<VtUser> {
 
