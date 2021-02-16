@@ -116,11 +116,13 @@ public class VtService implements VtServiceInterface {
             int userId = validUser.getId();
             List<CenterPermission> userPerms = vtPermsDao.getPermsByUserId(userId);
             String userAccesses = "";
-            for (CenterPermission perm : userPerms) {
-                userAccesses += String.valueOf(perm.getVacCenterId());
-                userAccesses += ",";
+            if(userPerms.size()>0) {
+                for (CenterPermission perm : userPerms) {
+                    userAccesses += String.valueOf(perm.getVacCenterId());
+                    userAccesses += ",";
+                }
+                userAccesses = userAccesses.substring(0, userAccesses.length() - 1);
             }
-            userAccesses = userAccesses.substring(0,userAccesses.length()-1);
             validUser.setVaccCenterAccesses(userAccesses);
 
             return validUser;
