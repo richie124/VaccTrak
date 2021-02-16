@@ -10,8 +10,7 @@ public class VtUser {
 //    private String lName;
     private String userName;
     private String password;
-    private String vaccCenterAccesses;
-//    private ArrayList<Integer> avaccCenterAccesses = new ArrayList<Integer>();
+    private List<Integer> vaccCenterAccesses = new ArrayList<Integer>();
 
     public void setId(int id) {
         this.id = id;
@@ -61,14 +60,13 @@ public class VtUser {
 //        return this.VaccCenterId;
 //    }
 
-    public void setVaccCenterAccesses(String VcAccesses) {
-        this.vaccCenterAccesses = VcAccesses;
+
+
+    public List<Integer> getVaccCenterAccesses() {
+        return vaccCenterAccesses;
     }
 
-    public String getVaccCenterAccesses() {
-        return this.vaccCenterAccesses;
+    public void setVaccCenterAccesses(List<Integer> avaccCenterAccesses) {
+        this.vaccCenterAccesses = avaccCenterAccesses;
     }
-
-
-
 }
