@@ -1,10 +1,13 @@
 package com.coolkidz.vacctrak.service;
 
 import com.coolkidz.vacctrak.data.VtDao;
+import com.coolkidz.vacctrak.data.VtPermsDao;
 import com.coolkidz.vacctrak.data.VtUserDao;
+import com.coolkidz.vacctrak.models.CenterPermission;
 import com.coolkidz.vacctrak.models.StateVaccs;
 import com.coolkidz.vacctrak.models.VaccCenter;
 import com.coolkidz.vacctrak.models.VtUser;
+import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
@@ -22,10 +25,12 @@ public class VtService implements VtServiceInterface {
 
     private final VtDao vtDao;
     private final VtUserDao vtUsrDao;
+    private final VtPermsDao vtPermsDao;
 
-    public VtService(VtDao vtDao, VtUserDao VtUsrDao) {
+    public VtService(VtDao vtDao, VtUserDao VtUsrDao, VtPermsDao vtPermsDao) {
         this.vtDao = vtDao;
         this.vtUsrDao = VtUsrDao;
+        this.vtPermsDao = vtPermsDao;
     }
 
     @Override
@@ -92,28 +97,13 @@ public class VtService implements VtServiceInterface {
     public VtUser createUser(VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         // Generate hashed password
-//        String password = user.getPassword();
-//        SecureRandom random = new SecureRandom();
-//        byte[] salt = new byte[16];
-//        random.nextBytes(salt);
-//        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-//        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-//        byte[] hash = factory.generateSecret(spec).getEncoded();
-//        Base64.Encoder enc = Base64.getUrlEncoder().withoutPadding();
-//        System.out.printf("salt: %s%n", enc.encodeToString(salt));
-//        System.out.printf("hash: %s%n", enc.encodeToString(hash));
-//
-//        String hashedPsswd =  + enc.encodeToString(hash);
-//
-//        System.out.println(hashedPsswd);
-//
-//        user.setPassword(hashedPsswd);
+
 
         return vtUsrDao.createUser(user);
     }
 
     @Override
-    public String validateUser(VtUser user) {
+    public VtUser validateUser(VtUser user) {
 
         // Generate hashed password
 
@@ -121,13 +111,22 @@ public class VtService implements VtServiceInterface {
 
 
         if(users.size() == 1) {
-            return users.get(0).getUserName();
+            VtUser validUser = users.get(0);
+            validUser.setPassword(null);
+            int userId = validUser.getId();
+            List<CenterPermission> userPerms = vtPermsDao.getPermsByUserId(userId);
+            String userAccesses = "";
+            for (CenterPermission perm : userPerms) {
+                userAccesses += String.valueOf(perm.getVacCenterId());
+                userAccesses += ",";
+            }
+            userAccesses = userAccesses.substring(0,userAccesses.length()-1);
+            validUser.setVaccCenterAccesses(userAccesses);
+
+            return validUser;
         }
-
-        return "";
+        VtUser emptyUser = new VtUser();
+        return emptyUser;
     }
-
-
-
 
 }
