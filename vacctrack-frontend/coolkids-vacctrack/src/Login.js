@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 const SERVICE_URL = "http://localhost:8080/VaccTrak";
 
 async function loginUser(credentials) {
-  return fetch(SERVICE_URL + 'AdminPortal/Login', {
+
+  return fetch(SERVICE_URL + '/AdminPortal/Login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -16,16 +17,22 @@ async function loginUser(credentials) {
   });
  }
 
-export default function Login({ setToken }) {
-  const [username, setUserName] = useState();
+export default function Login({ setToken, setMarkers, markers, handleClose }) {
+  const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
     const token = await loginUser({ //send in username and pass when calling loginUser and set it in 'token'
-      username,
+      userName,
       password
     });
-    setToken(token);    // send succesfull token to setToken()
+    if (null !== token.username) {
+      setToken(token);    // send succesfull token to setToken()
+
+      setMarkers(markers.filter(marker => token.vaccCenterAccesses.indexOf(marker.id) >= 0));
+      handleClose();
+    }
+
   }
   return(
     <div className="login-wrapper">

@@ -7,6 +7,7 @@ import Create from './Create';
 import AddVacc from './AddVacc';
 import StateNumbers from './StateNumbers'
 import Login from './Login'
+import AddUser from './AddUser'
 import useToken from './useToken'
 import {
   getGeocode,
@@ -51,6 +52,7 @@ function App() {
   const [loginShow, setLoginShow] = useState(false);
   const [stateData, setStateData] = useState([]);
   const {token, setToken} = useToken();
+  const [createUser, setCreateUser] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -65,7 +67,6 @@ function App() {
       .then(data => data.json())
       .then(data => {
         setStateData(data);
-        console.log(data);
       });
   }, []);
 
@@ -154,7 +155,14 @@ function App() {
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Login setToken={setToken} />
+          { !createUser ? (
+          <Login 
+            setToken={setToken}
+            markers={markers}
+            setMarkers={setMarkers} 
+            handleClose={handleLoginClose}/>) : 
+           (<AddUser />)
+          }
         </Modal.Body>
     </Modal>
 
