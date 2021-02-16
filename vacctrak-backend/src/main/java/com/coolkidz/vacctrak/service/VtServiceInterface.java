@@ -28,6 +28,6 @@ public interface VtServiceInterface {
 
     public VtUser createUser(VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException;
 
-    public boolean validateUser(VtUser user) throws NoSuchAlgorithmException, InvalidKeySpecException;
+    public String validateUser(VtUser user) throws NoSuchAlgorithmException, InvalidKeySpecException;
 
 }
