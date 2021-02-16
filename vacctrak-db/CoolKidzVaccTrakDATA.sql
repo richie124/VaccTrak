@@ -284,18 +284,18 @@ VALUES ("Rainy Lake Medical Center Clinic", "1400 US-71", "International Falls",
 
 
 -- USER TEST DATA:
-INSERT INTO USERS(UserName, Password) VALUES("Al_Cooper", "password1");
-INSERT INTO USERS(UserName, Password) VALUES("Mad_Farrell", "password2");
-INSERT INTO USERS(UserName, Password) VALUES("Fred_Myers", "password3");
-INSERT INTO USERS(UserName, Password) VALUES("T_Thompson", "password4");
-INSERT INTO USERS(UserName, Password) VALUES("Char_Russell", "password5");
-INSERT INTO USERS(UserName, Password) VALUES("Bri_Cooper", "password6");
-INSERT INTO USERS(UserName, Password) VALUES("J_Davis", "password7");
-INSERT INTO USERS(UserName, Password) VALUES("D_Fowler", "password8");
-INSERT INTO USERS(UserName, Password) VALUES("R_Gray", "password9");
-INSERT INTO USERS(UserName, Password) VALUES("L_Reed", "password10");
-INSERT INTO USERS(UserName, Password) VALUES("K_West", "password11");
-INSERT INTO USERS(UserName, Password) VALUES("Max_Stewart", "password12");
+INSERT INTO USERS(UserName, UserPassword) VALUES("Al_Cooper", "password1");
+INSERT INTO USERS(UserName, UserPassword) VALUES("Mad_Farrell", "password2");
+INSERT INTO USERS(UserName, UserPassword) VALUES("Fred_Myers", "password3");
+INSERT INTO USERS(UserName, UserPassword) VALUES("T_Thompson", "password4");
+INSERT INTO USERS(UserName, UserPassword) VALUES("Char_Russell", "password5");
+INSERT INTO USERS(UserName, UserPassword) VALUES("Bri_Cooper", "password6");
+INSERT INTO USERS(UserName, UserPassword) VALUES("J_Davis", "password7");
+INSERT INTO USERS(UserName, UserPassword) VALUES("D_Fowler", "password8");
+INSERT INTO USERS(UserName, UserPassword) VALUES("R_Gray", "password9");
+INSERT INTO USERS(UserName, UserPassword) VALUES("L_Reed", "password10");
+INSERT INTO USERS(UserName, UserPassword) VALUES("K_West", "password11");
+INSERT INTO USERS(UserName, UserPassword) VALUES("Max_Stewart", "password12");
 
 
 -- insert test data to permissions table
