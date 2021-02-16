@@ -57,10 +57,12 @@ public class VtDbUserDao implements VtUserDao{
     }
 
     private void insertPerms(VtUser vtUser) {
-        String[] vaccCenterPerms = vtUser.getVaccCenterAccesses().split(",");
-        for (int i = 0; i < vaccCenterPerms.length; i++) {
+//        String[] vaccCenterPerms = vtUser.getVaccCenterAccesses().split(",");
+        List<Integer> vaccCenterPerms = vtUser.getVaccCenterAccesses();
+//        for (int i = 0; i < vaccCenterPerms.length; i++) {
+        for (int i = 0; i < vaccCenterPerms.size(); i++) {
 
-            int vaccCenterId = Integer.parseInt(vaccCenterPerms[i]);
+            int vaccCenterId = vaccCenterPerms.get(i);
 
             final String insertSql = "INSERT INTO Permissions(UserId, VacCenterId) VALUES(?,?);";
             GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();

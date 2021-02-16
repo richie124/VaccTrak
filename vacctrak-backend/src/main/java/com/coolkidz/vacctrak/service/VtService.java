@@ -114,16 +114,9 @@ public class VtService implements VtServiceInterface {
             VtUser validUser = users.get(0);
             validUser.setPassword(null);
             int userId = validUser.getId();
-            List<CenterPermission> userPerms = vtPermsDao.getPermsByUserId(userId);
-            String userAccesses = "";
-            if(userPerms.size()>0) {
-                for (CenterPermission perm : userPerms) {
-                    userAccesses += String.valueOf(perm.getVacCenterId());
-                    userAccesses += ",";
-                }
-                userAccesses = userAccesses.substring(0, userAccesses.length() - 1);
-            }
-            validUser.setVaccCenterAccesses(userAccesses);
+            validUser.setVaccCenterAccesses(vtPermsDao.getPermsByUserId(userId));
+
+
 
             return validUser;
         }
@@ -131,3 +124,33 @@ public class VtService implements VtServiceInterface {
         return emptyUser;
     }
 }
+//
+//    @Override
+//    public VtUser validateUser(VtUser user) {
+//
+//        // Generate hashed password
+//
+//        List<VtUser> users = vtUsrDao.validateUser(user);
+//
+//
+//        if(users.size() == 1) {
+//            VtUser validUser = users.get(0);
+//            validUser.setPassword(null);
+//            int userId = validUser.getId();
+//            List<CenterPermission> userPerms = vtPermsDao.getPermsByUserId(userId);
+//            String userAccesses = "";
+//            if(userPerms.size()>0) {
+//                for (CenterPermission perm : userPerms) {
+//                    userAccesses += String.valueOf(perm.getVacCenterId());
+//                    userAccesses += ",";
+//                }
+//                userAccesses = userAccesses.substring(0, userAccesses.length() - 1);
+//            }
+//            validUser.setVaccCenterAccesses(userAccesses);
+//
+//            return validUser;
+//        }
+//        VtUser emptyUser = new VtUser();
+//        return emptyUser;
+//    }
+//}

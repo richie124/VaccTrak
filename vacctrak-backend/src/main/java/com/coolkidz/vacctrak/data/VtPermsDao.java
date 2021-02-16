@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface VtPermsDao {
 
-    public List<CenterPermission> getPermsByUserId(int userId);
+    public List<Integer> getPermsByUserId(int userId);
 }
