@@ -29,6 +29,11 @@ public class UserController {
         return VtSi.createUser(user);
     }
 
+    @PostMapping("/Login")
+    public Boolean login(@RequestBody VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        Boolean good = VtSi.validateUser(user);
+        return good;
+    }
 
 
     @GetMapping()
