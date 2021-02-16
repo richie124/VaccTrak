@@ -130,5 +130,4 @@ public class VtService implements VtServiceInterface {
         VtUser emptyUser = new VtUser();
         return emptyUser;
     }
-
 }
