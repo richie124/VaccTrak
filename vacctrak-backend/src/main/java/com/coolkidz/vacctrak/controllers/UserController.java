@@ -30,11 +30,10 @@ public class UserController {
     }
 
     @PostMapping("/Login")
-    public String login(@RequestBody VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        String token = VtSi.validateUser(user);
+    public VtUser login(@RequestBody VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        VtUser token = VtSi.validateUser(user);
         return token;
     }
-
 
     @GetMapping()
     public String Welcome() {
