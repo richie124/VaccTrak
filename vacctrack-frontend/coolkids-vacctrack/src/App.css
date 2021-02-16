@@ -81,8 +81,9 @@
 .stateChartButton {
   position: absolute;
   top: 1rem;
-  right: 15rem;
+  left: 17rem;
   z-index: 10;
+  font-size: small;
 }
 
 .center {
@@ -105,4 +106,10 @@
   background-color: rgba(0, 0, 0, 1);
   padding-left: 0.5rem;
   z-index: 10;
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -1,4 +1,3 @@
-import './App.css';
 import React, {useState, useRef, useCallback, useEffect} from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
@@ -11,8 +10,9 @@ import {
   getGeocode,
   getLatLng
 } from "use-places-autocomplete";
-import { Modal, Button, Table } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 const SERVICE_URL = "http://localhost:8080/VaccTrak";
 
@@ -133,8 +133,8 @@ function App() {
   return (<div>
     <div className="navbar-custom">
       <img src="logo.png" alt="logo" id="logo"/>
-      <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
       <Button onClick={handleStateChartShow} className="stateChartButton"> Numbers by State </Button>
+      <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
       <Locate panTo={panTo} returnZoom={returnZoom} />
     </div>
 
