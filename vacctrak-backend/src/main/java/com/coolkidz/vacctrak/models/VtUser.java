@@ -1,5 +1,8 @@
 package com.coolkidz.vacctrak.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VtUser {
 
     private int id;
@@ -7,7 +10,8 @@ public class VtUser {
     private String lName;
     private String userName;
     private String password;
-    private int VaccCenterId;
+    private String vaccCenterAccesses;
+    private ArrayList<Integer> avaccCenterAccesses = new ArrayList<Integer>();
 
     public void setId(int id) {
         this.id = id;
@@ -49,12 +53,22 @@ public class VtUser {
         return this.password;
     }
 
-    public void setVaccCenterId(int VaccCenterId) {
-        this.VaccCenterId = VaccCenterId;
+//    public void setVaccCenterId(int VaccCenterId) {
+//        this.VaccCenterId = VaccCenterId;
+//    }
+//
+//    public int getVaccCenterId() {
+//        return this.VaccCenterId;
+//    }
+
+    public void setVaccCenterAccesses(String VcAccesses) {
+        this.vaccCenterAccesses = VcAccesses;
     }
 
-    public int getVaccCenterId() {
-        return this.VaccCenterId;
+    public String getVaccCenterAccesses() {
+        return this.vaccCenterAccesses;
     }
+
+
 
 }

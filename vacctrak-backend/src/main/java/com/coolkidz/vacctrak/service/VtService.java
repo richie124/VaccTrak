@@ -2,6 +2,7 @@ package com.coolkidz.vacctrak.service;
 
 import com.coolkidz.vacctrak.data.VtDao;
 import com.coolkidz.vacctrak.data.VtUserDao;
+import com.coolkidz.vacctrak.models.StateVaccs;
 import com.coolkidz.vacctrak.models.VaccCenter;
 import com.coolkidz.vacctrak.models.VtUser;
 import org.springframework.stereotype.Service;
@@ -12,17 +13,18 @@ import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.util.*;
 
 @Service
 public class VtService implements VtServiceInterface {
 
     private final VtDao vtDao;
-    private final VtUserDao VtUsrDao;
+    private final VtUserDao vtUsrDao;
 
     public VtService(VtDao vtDao, VtUserDao VtUsrDao) {
         this.vtDao = vtDao;
-        this.VtUsrDao = VtUsrDao;
+        this.vtUsrDao = VtUsrDao;
     }
 
     @Override
@@ -36,7 +38,9 @@ public class VtService implements VtServiceInterface {
     }
 
     @Override
-    public Map<String, List<Integer>> getByStates() {
+    public List<StateVaccs> getByStates() {
+
+        List<StateVaccs> stateVaccsList = new ArrayList<StateVaccs>();
 
         Map<String, List<Integer>> stateVaccs = new HashMap<String, List<Integer>>();
 
@@ -58,7 +62,9 @@ public class VtService implements VtServiceInterface {
                 stateVaccs.put(tempState, tempDoses);
             }
         }
-        return stateVaccs;
+        stateVaccs.forEach((key, value) -> stateVaccsList.add(new StateVaccs(key, value.get(0), value.get(1))));
+
+        return stateVaccsList;
     }
 
     @Override
@@ -85,53 +91,60 @@ public class VtService implements VtServiceInterface {
     public VtUser createUser(VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         // Generate hashed password
-        String originalPassword = user.getPassword();
-        String generatedSecuredPasswordHash = generateStorngPasswordHash(originalPassword);
-        user.setPassword(generatedSecuredPasswordHash);
+//        String password = user.getPassword();
+//        SecureRandom random = new SecureRandom();
+//        byte[] salt = new byte[16];
+//        random.nextBytes(salt);
+//        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+//        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+//        byte[] hash = factory.generateSecret(spec).getEncoded();
+//        Base64.Encoder enc = Base64.getUrlEncoder().withoutPadding();
+//        System.out.printf("salt: %s%n", enc.encodeToString(salt));
+//        System.out.printf("hash: %s%n", enc.encodeToString(hash));
+//
+//        String hashedPsswd =  + enc.encodeToString(hash);
+//
+//        System.out.println(hashedPsswd);
+//
+//        user.setPassword(hashedPsswd);
 
-        return VtUsrDao.createUser(user);
+        return vtUsrDao.createUser(user);
     }
 
     @Override
     public boolean validateUser(VtUser user) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        return false;
+
+        // Generate hashed password
+//        String password = user.getPassword();
+//        SecureRandom random = new SecureRandom();
+//        byte[] salt = new byte[16];
+//        random.nextBytes(salt);
+//        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+//        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+//        byte[] hash = factory.generateSecret(spec).getEncoded();
+//
+//        String hashedPsswd = new String(hash);
+//
+//        System.out.println(hashedPsswd);
+//
+//        user.setPassword(hashedPsswd);
+
+
+
+//        String genPsswdHash = generateStrongPasswordHash(user.getPassword());
+//        boolean matched = validatePassword("password", "1000:c7d7383d2633798ee8e45d08d008c905:01851ebfa418a0073979a3ae0016a9c7c2f66df4ccdfce9cae4b8c0620531543c8b958a165d941f91a3263c7ca122b45830e21f9cecd6226fef317eeeee4b209");
+//
+//        user.setPassword(genPsswdHash);
+//
+        return vtUsrDao.validateUser(user);
+
+//        if(userExists) {
+//            return true;
+//        }
+//
+//        return false;
     }
 
-    // Helper function for creating password hash
-    private static String generateStorngPasswordHash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException
-    {
-        int iterations = 1000;
-        char[] chars = password.toCharArray();
-        byte[] salt = getSalt();
-
-        PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] hash = skf.generateSecret(spec).getEncoded();
-        return iterations + ":" + toHex(salt) + ":" + toHex(hash);
-    }
-
-    // Helper function for creating password hash
-    private static byte[] getSalt() throws NoSuchAlgorithmException
-    {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-        byte[] salt = new byte[16];
-        sr.nextBytes(salt);
-        return salt;
-    }
-
-    // Helper function for creating password hash
-    private static String toHex(byte[] array) throws NoSuchAlgorithmException
-    {
-        BigInteger bi = new BigInteger(1, array);
-        String hex = bi.toString(16);
-        int paddingLength = (array.length * 2) - hex.length();
-        if(paddingLength > 0)
-        {
-            return String.format("%0"  +paddingLength + "d", 0) + hex;
-        }else{
-            return hex;
-        }
-    }
 
 
 
