@@ -78,6 +78,13 @@
   z-index: 10;
 }
 
+.stateChartButton {
+  position: absolute;
+  top: 1rem;
+  right: 15rem;
+  z-index: 10;
+}
+
 .center {
   text-align: center;
 }

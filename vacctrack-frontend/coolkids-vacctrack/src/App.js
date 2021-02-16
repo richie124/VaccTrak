@@ -5,12 +5,13 @@ import mapStyles from './mapStyles';
 import Search from './Search';
 import Locate from './Locate';
 import Create from './Create';
-import AddVacc from './AddVacc'
+import AddVacc from './AddVacc';
+import StateNumbers from './StateNumbers'
 import {
   getGeocode,
   getLatLng
 } from "use-places-autocomplete";
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SERVICE_URL = "http://localhost:8080/VaccTrak";
@@ -44,6 +45,8 @@ function App() {
   const [addVaccShow, setAddVaccShow] = useState(false);
   const [moreInfoShow, setMoreInfoShow] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [stateChartShow, setStateChartShow] = useState(false);
+  const [stateData, setStateData] = useState([]);
 
   useEffect(() => {
     loadData();
@@ -53,6 +56,13 @@ function App() {
     fetch(SERVICE_URL + "/getAllVaccCenters")
       .then(data => data.json())
       .then(data => setMarkers(data));
+
+    fetch(SERVICE_URL + "/getVaccNumbersByState")
+      .then(data => data.json())
+      .then(data => {
+        setStateData(data);
+        console.log(data);
+      });
   }, []);
 
   const mapRef = useRef();
@@ -113,6 +123,8 @@ function App() {
   const handleAddVaccShow = () => setAddVaccShow(true);
   const handleMoreInfoShow = () => setMoreInfoShow(true);
   const handleMoreInfoHide = () => setMoreInfoShow(false);
+  const handleStateChartShow = () => setStateChartShow(true);
+  const handleStateChartClose = () => setStateChartShow(false);
 
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading maps";
@@ -122,8 +134,18 @@ function App() {
     <div className="navbar-custom">
       <img src="logo.png" alt="logo" id="logo"/>
       <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
+      <Button onClick={handleStateChartShow} className="stateChartButton"> Numbers by State </Button>
       <Locate panTo={panTo} returnZoom={returnZoom} />
     </div>
+
+    <Modal show={stateChartShow} onHide={handleStateChartClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Vaccination Numbers by State</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <StateNumbers stateData={stateData}/>
+        </Modal.Body>
+    </Modal>
 
 
     <Modal show={newCenterShow} onHide={handleNewCenterClose}>
