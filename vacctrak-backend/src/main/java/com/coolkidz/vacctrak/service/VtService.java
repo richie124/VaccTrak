@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -112,37 +113,18 @@ public class VtService implements VtServiceInterface {
     }
 
     @Override
-    public boolean validateUser(VtUser user) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public String validateUser(VtUser user) {
 
         // Generate hashed password
-//        String password = user.getPassword();
-//        SecureRandom random = new SecureRandom();
-//        byte[] salt = new byte[16];
-//        random.nextBytes(salt);
-//        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-//        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-//        byte[] hash = factory.generateSecret(spec).getEncoded();
-//
-//        String hashedPsswd = new String(hash);
-//
-//        System.out.println(hashedPsswd);
-//
-//        user.setPassword(hashedPsswd);
+
+        List<VtUser> users = vtUsrDao.validateUser(user);
 
 
+        if(users.size() == 1) {
+            return users.get(0).getUserName();
+        }
 
-//        String genPsswdHash = generateStrongPasswordHash(user.getPassword());
-//        boolean matched = validatePassword("password", "1000:c7d7383d2633798ee8e45d08d008c905:01851ebfa418a0073979a3ae0016a9c7c2f66df4ccdfce9cae4b8c0620531543c8b958a165d941f91a3263c7ca122b45830e21f9cecd6226fef317eeeee4b209");
-//
-//        user.setPassword(genPsswdHash);
-//
-        return vtUsrDao.validateUser(user);
-
-//        if(userExists) {
-//            return true;
-//        }
-//
-//        return false;
+        return "";
     }
 
 
