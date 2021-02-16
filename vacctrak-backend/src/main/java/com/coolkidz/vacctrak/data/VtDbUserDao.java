@@ -81,14 +81,10 @@ public class VtDbUserDao implements VtUserDao{
     }
 
     @Override
-    public boolean validateUser(VtUser vtUser) {
-        final String sql = "select UserId from Users where UserId=? and UserPassword=?;";
-        List<VtUser> users = jdbc.query(sql, new UsersMapper(), vtUser.getId(), vtUser.getPassword());
+    public List<VtUser> validateUser(VtUser vtUser) {
+        final String sql = "select * from Users where UserName=? and UserPassword=?;";
+        return jdbc.query(sql, new UsersMapper(), vtUser.getUserName(), vtUser.getPassword());
 
-        if (users.size() == 1) {
-            return true;
-        }
-        return false;
     }
 
 
