@@ -145,7 +145,7 @@ function App() {
     <div className="navbar-custom">
       <img src="logo.png" alt="logo" id="logo"/>
       <Button onClick={handleStateChartShow} className="stateChartButton"> Numbers by State </Button>
-      <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
+      <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow} getToken={getToken}/>
       <Locate panTo={panTo} returnZoom={returnZoom} />
       {getToken() ? (<Button onClick={handleLogOut} className="loginButton"> LogOut </Button>) : (<Button onClick={handleLoginShow} className="loginButton"> Login </Button>)}
     </div>
