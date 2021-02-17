@@ -25,10 +25,8 @@ public class VtDbUserDao implements VtUserDao{
     @Transactional
     public VtUser createUser(VtUser vtUser) {
 
-        final String querySql = "select * from users where UserName=?;";
-        List<VtUser> users = jdbc.query(querySql, new UsersMapper(), vtUser.getUserName());
 
-        if (users.size() < 1) {
+        if (userExists(vtUser)) {
             // Insert new user into Users table
             final String insertSql = "INSERT INTO users(UserName, UserPassword) VALUES(?,?);";
             GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -40,6 +38,7 @@ public class VtDbUserDao implements VtUserDao{
                         Statement.RETURN_GENERATED_KEYS);
 
                 statement.setString(1, vtUser.getUserName());
+//                statement.setBytes(2, vtUser.getPasswordHash());
                 statement.setString(2, vtUser.getPassword());
                 return statement;
 
@@ -47,41 +46,18 @@ public class VtDbUserDao implements VtUserDao{
 
             vtUser.setId(keyHolder.getKey().intValue());
 
-
-            insertPerms(vtUser);
-
             return vtUser;
         }
-        // vtUser.setUserName("AlreadyTaken");
+
         return null;
     }
 
-    private void insertPerms(VtUser vtUser) {
-        List<Integer> vaccCenterPerms = vtUser.getVaccCenterAccesses();
-        for (int i = 0; i < vaccCenterPerms.size(); i++) {
+    private Boolean userExists(VtUser vtUser) {
 
-            int vaccCenterId = vaccCenterPerms.get(i);
-
-            final String insertSql = "INSERT INTO Permissions(UserId, VacCenterId) VALUES(?,?);";
-            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-
-            jdbc.update((Connection conn) -> {
-
-                PreparedStatement statement = conn.prepareStatement(
-                        insertSql,
-                        Statement.RETURN_GENERATED_KEYS);
-
-                statement.setInt(1, vtUser.getId());
-                statement.setInt(2, vaccCenterId);
-                return statement;
-
-            }, keyHolder);
-
-        }
-    }
-
-    private void userExists(VtUser vtUser) {
-
+        final String querySql = "select * from users where UserName=?;";
+        List<VtUser> users = jdbc.query(querySql, new UsersMapper(), vtUser.getUserName());
+        if (users.size() < 1) return true;
+        return false;
     }
 
     @Override

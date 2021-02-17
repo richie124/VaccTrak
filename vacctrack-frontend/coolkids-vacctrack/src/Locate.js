@@ -1,15 +1,21 @@
 import React from 'react';
 
-function Locate({panTo}) {
+function Locate({panTo, isZoomed, returnZoom}) {
 
   return (
-  <button className="locate" onClick={() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      panTo({lat: position.coords.latitude, lng: position.coords.longitude})
-    }, () => null);
-  }}>
-    <img src="compass.png" alt="compass - locate me"/>
-  </button>);
+    <div>
+      { isZoomed ?
+    <button className="return" onClick={() => returnZoom}>Return</button> : null
+      }
+    <button className="locate" onClick={() => {
+      navigator.geolocation.getCurrentPosition((position) => {
+        panTo({lat: position.coords.latitude, lng: position.coords.longitude}, 14)
+      }, () => null);
+    }}>
+      <img src="compass.png" alt="compass - locate me"/>
+    </button>
+  </div>
+  );
 }
 
 export default Locate;

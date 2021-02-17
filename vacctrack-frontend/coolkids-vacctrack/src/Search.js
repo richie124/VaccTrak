@@ -9,7 +9,7 @@ import {
 } from '@reach/combobox';
 import '@reach/combobox/styles.css';
 
-function Search({getLatLngFromAddress, panTo}) {
+function Search({getLatLngFromAddress, panTo, handleShow, token}) {
   const {
     ready, 
     value, 
@@ -27,13 +27,21 @@ function Search({getLatLngFromAddress, panTo}) {
   });
   return (
     <div className="search">
-    <Combobox onSelect={async (address) => {
+      <div className="center addVaccSite">
+      { token ?
+      (
+        <span>Don't see your vaccination site listed? <button id="clickHere" onClick={handleShow}>Click here!</button></span>
+      ) : '-'
+      }
+      </div>
+    <Combobox
+      onSelect={async (address) => {
       setValue(address, false);
       clearSuggestions();
 
       try {
         const { lat, lng } = await getLatLngFromAddress(address);
-        panTo({lat, lng});
+        panTo({lat, lng}, 14);
       } catch (error) {
         console.log("error2");
       }
