@@ -5,10 +5,10 @@ import com.coolkidz.vacctrak.models.VtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 @Repository
@@ -19,6 +19,34 @@ public class VtDbPermsDao implements VtPermsDao {
     @Autowired
     public VtDbPermsDao(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
+    }
+
+    @Override
+    public List<Integer> setPerms(VtUser user) {
+
+        List<Integer> vaccCenterPerms = user.getVaccCenterAccesses();
+        for (int i = 0; i < vaccCenterPerms.size(); i++) {
+
+            int vaccCenterId = vaccCenterPerms.get(i);
+
+            final String insertSql = "INSERT INTO Permissions(UserId, VacCenterId) VALUES(?,?);";
+            GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+
+            jdbc.update((Connection conn) -> {
+
+                PreparedStatement statement = conn.prepareStatement(
+                        insertSql,
+                        Statement.RETURN_GENERATED_KEYS);
+
+                statement.setInt(1, user.getId());
+                statement.setInt(2, vaccCenterId);
+                return statement;
+
+            }, keyHolder);
+
+        }
+
+        return getPermsByUserId(user.getId());
     }
 
     @Override

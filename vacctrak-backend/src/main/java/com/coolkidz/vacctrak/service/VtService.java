@@ -97,9 +97,17 @@ public class VtService implements VtServiceInterface {
     public VtUser createUser(VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         // Generate hashed password
+        VtUser createdUser = vtUsrDao.createUser(user);
+
+        if(createdUser != null){
+            vtPermsDao.setPerms(user);
+
+            int userId = createdUser.getId();
+            createdUser.setVaccCenterAccesses(vtPermsDao.getPermsByUserId(userId));
+        }
 
 
-        return vtUsrDao.createUser(user);
+        return createdUser;
     }
 
     @Override
