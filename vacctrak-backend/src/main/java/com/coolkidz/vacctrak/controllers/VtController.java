@@ -24,12 +24,12 @@ public class VtController {
 
     @PostMapping("/createVaccCenter")
     @ResponseStatus(HttpStatus.CREATED)
-    public VaccCenter createVaccCenter(@RequestBody VaccCenter vaccCenter) {
-        return VtSi.createVaccCenter(vaccCenter);
-    }
-//    public VaccCenter createVaccCenter(@RequestBody HashMap<String, String> vaccCenter) {
+//    public VaccCenter createVaccCenter(@RequestBody VaccCenter vaccCenter) {
 //        return VtSi.createVaccCenter(vaccCenter);
 //    }
+    public VaccCenter createVaccCenter(@RequestBody HashMap<String, String> vaccCenter) {
+        return VtSi.createVaccCenter(vaccCenter);
+    }
 
     @PutMapping("/UpdateDoses")
     public ResponseEntity updateVaccDoses(@RequestBody VaccCenter vaccCenter) {

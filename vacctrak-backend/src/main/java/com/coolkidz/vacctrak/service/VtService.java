@@ -36,8 +36,38 @@ public class VtService implements VtServiceInterface {
     }
 
     @Override
-    public VaccCenter createVaccCenter(VaccCenter newVaccCenter) {
-        return vtDao.createVaccCenter(newVaccCenter);
+//    public VaccCenter createVaccCenter(VaccCenter newVaccCenter) {
+//        return vtDao.createVaccCenter(newVaccCenter);
+//    }
+    public VaccCenter createVaccCenter(HashMap newVaccCenterData) {
+
+        VaccCenter newVaccCenter = new VaccCenter();
+
+        newVaccCenter.setName((String) newVaccCenterData.get("name"));
+        newVaccCenter.setAddress((String) newVaccCenterData.get("address"));
+        newVaccCenter.setCity((String) newVaccCenterData.get("city"));
+        newVaccCenter.setState((String) newVaccCenterData.get("state"));
+        newVaccCenter.setZipcode((String) newVaccCenterData.get("zipcode"));
+        newVaccCenter.setLatitude((String) newVaccCenterData.get("latitude"));
+        newVaccCenter.setLongitude((String) newVaccCenterData.get("longitude"));
+        newVaccCenter.setPhoneNumber((String) newVaccCenterData.get("phoneNumber"));
+        newVaccCenter.setSingleDoses(Integer.parseInt((String) newVaccCenterData.get("singleDoses")));
+        newVaccCenter.setDoubleDoses(Integer.parseInt((String) newVaccCenterData.get("doubleDoses")));
+
+        newVaccCenter = vtDao.createVaccCenter(newVaccCenter);
+
+        List<Integer> vaccCenterList = new ArrayList<>();
+
+        vaccCenterList.add(newVaccCenter.getId());
+
+        VtUser newVtUser = new VtUser();
+
+        newVtUser.setId(Integer.parseInt((String) newVaccCenterData.get("userId")));
+        newVtUser.setVaccCenterAccesses(vaccCenterList);
+
+        vtPermsDao.setPerms(newVtUser);
+
+        return newVaccCenter;
     }
 
     @Override
