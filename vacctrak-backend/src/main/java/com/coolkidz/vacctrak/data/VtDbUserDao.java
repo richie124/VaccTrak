@@ -38,6 +38,7 @@ public class VtDbUserDao implements VtUserDao{
                         Statement.RETURN_GENERATED_KEYS);
 
                 statement.setString(1, vtUser.getUserName());
+//                statement.setBytes(2, vtUser.getPasswordHash());
                 statement.setString(2, vtUser.getPassword());
                 return statement;
 
