@@ -17,16 +17,17 @@ async function loginUser(credentials) {
   });
  }
 
-export default function Login({ setToken, setMarkers, markers, handleClose }) {
+export default function Login({ setToken, setMarkers, markers, handleClose, setCreateUser }) {
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
+
   const handleSubmit = async e => {
     e.preventDefault();
     const token = await loginUser({ //send in username and pass when calling loginUser and set it in 'token'
       userName,
       password
     });
-    if (null !== token.username) {
+    if (null !== token.userName) {
       setToken(token);    // send succesfull token to setToken()
 
       setMarkers(markers.filter(marker => token.vaccCenterAccesses.indexOf(marker.id) >= 0));
@@ -49,6 +50,7 @@ export default function Login({ setToken, setMarkers, markers, handleClose }) {
         <button type="submit">Submit</button>
       </div>
     </form>
+      New to Vacctrack? <button id="clickHere" onClick={()=> setCreateUser(true)}>Click here!</button>
     </div>
   )
 }
