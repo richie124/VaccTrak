@@ -11,6 +11,9 @@ Steps to get API running:
   <li>Run the Java SpringBoot application in /vacctrak-backend</li>
 </ol>
 
+frontEnd: 
+install react-bootstrap
+install multiselect-react-dropdown
 
 
 
