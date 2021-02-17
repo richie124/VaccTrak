@@ -8,6 +8,7 @@ import AddVacc from './AddVacc';
 import StateNumbers from './StateNumbers'
 import Login from './Login'
 import AddUser from './AddUser'
+import Settings from './Settings'
 import useToken from './hooks/useToken'
 import {
   getGeocode,
@@ -54,6 +55,7 @@ function App() {
   const {getToken, setToken, logOut} = useToken();
   const [createUser, setCreateUser] = useState(false);
   const [vaccCenters, setVaccCenters] = useState([]);
+  const [settingsShow, setSettingsShow] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -132,6 +134,8 @@ function App() {
   const handleStateChartClose = () => setStateChartShow(false);
   const handleLoginShow = () => setLoginShow(true);
   const handleLoginClose = () => setLoginShow(false);
+  const handleSettingsShow = () => setSettingsShow(true);
+  const handleSettingsClose = () => setSettingsShow(false);
   const handleLogOut = () => {
     logOut();
     setMarkers(vaccCenters);
@@ -147,6 +151,8 @@ function App() {
       <Button onClick={handleStateChartShow} className="stateChartButton"> Numbers by State </Button>
       <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow} getToken={getToken}/>
       <Locate panTo={panTo} returnZoom={returnZoom} />
+      
+      {getToken() ? (<button className="settingsButton" onClick={handleSettingsShow}><img src="settings.png" alt="settings"/></button>) : null}
       {getToken() ? (<Button onClick={handleLogOut} className="loginButton"> LogOut </Button>) : (<Button onClick={handleLoginShow} className="loginButton"> Login </Button>)}
     </div>
 
@@ -196,6 +202,21 @@ function App() {
         </Modal.Header>
         <Modal.Body>
           <AddVacc handleClose={handleAddVaccClose} SERVICE_URL={SERVICE_URL} vaccCenter={selected} updateMarker={updateMarker}/>
+        </Modal.Body>
+    </Modal>
+
+    <Modal show={settingsShow} onHide={handleSettingsClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Settings</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Settings 
+          getToken={getToken}
+          setToken={setToken}
+          vaccCenters={vaccCenters}
+          SERVICE_URL={SERVICE_URL}
+          setMarkers={setMarkers}
+          handleClose={handleSettingsClose}/>
         </Modal.Body>
     </Modal>
 

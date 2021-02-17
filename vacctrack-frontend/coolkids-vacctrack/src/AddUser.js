@@ -7,7 +7,7 @@ function AddUser ({  SERVICE_URL, setCreateUser, vaccCenters }) {
   const { value:username, bind:bindUsername, reset:resetUsername } = useInput('');
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput('');
   const { value:password2, bind:bindPassword2, reset:resetPassword2 } = useInput('');
-  const [vaccCenterAccesses, setVaccCenterAccesses] = useState([])
+  const [vaccCenterAccesses, setVaccCenterAccesses] = useState([]);
   const [formErrors, setFormErrors] = useState({});
 
   const validateForm = (user) => {
