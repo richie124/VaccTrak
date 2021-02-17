@@ -109,3 +109,8 @@ public class VtController {
 
 // how to add user auth to React and Java Spring Boot
 // if frontend sends userId
+
+
+// Error handling
+// User should only be created if username is unique
+// Figure out how to catch errors etc

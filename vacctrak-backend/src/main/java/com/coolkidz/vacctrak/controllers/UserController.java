@@ -25,14 +25,21 @@ public class UserController {
 
     @PostMapping("/CreateUser")
     @ResponseStatus(HttpStatus.CREATED)
-    public VtUser createUser(@RequestBody VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        return VtSi.createUser(user);
+    public ResponseEntity<VtUser> createUser(@RequestBody VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        VtUser response = VtSi.createUser(user);
+        if (response == null) {
+            return new ResponseEntity(null, HttpStatus.CONFLICT);
+        }
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/Login")
-    public VtUser login(@RequestBody VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        VtUser token = VtSi.validateUser(user);
-        return token;
+    public ResponseEntity<VtUser> login(@RequestBody VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        VtUser response = VtSi.validateUser(user);
+        if (response == null) {
+            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping()
