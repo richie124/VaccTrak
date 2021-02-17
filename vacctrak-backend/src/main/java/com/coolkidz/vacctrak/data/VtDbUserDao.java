@@ -52,14 +52,12 @@ public class VtDbUserDao implements VtUserDao{
 
             return vtUser;
         }
-        vtUser.setUserName("AlreadyTaken");
-        return vtUser;
+        // vtUser.setUserName("AlreadyTaken");
+        return null;
     }
 
     private void insertPerms(VtUser vtUser) {
-//        String[] vaccCenterPerms = vtUser.getVaccCenterAccesses().split(",");
         List<Integer> vaccCenterPerms = vtUser.getVaccCenterAccesses();
-//        for (int i = 0; i < vaccCenterPerms.length; i++) {
         for (int i = 0; i < vaccCenterPerms.size(); i++) {
 
             int vaccCenterId = vaccCenterPerms.get(i);
@@ -82,6 +80,10 @@ public class VtDbUserDao implements VtUserDao{
         }
     }
 
+    private void userExists(VtUser vtUser) {
+
+    }
+
     @Override
     public List<VtUser> validateUser(VtUser vtUser) {
         final String sql = "select * from Users where UserName=? and UserPassword=?;";
@@ -96,8 +98,6 @@ public class VtDbUserDao implements VtUserDao{
         public VtUser mapRow(ResultSet rs, int index) throws SQLException {
             VtUser vtUser = new VtUser();
             vtUser.setId(rs.getInt("UserId"));
-//            vtUser.setfName(rs.getString("FirstName"));
-//            vtUser.setlName(rs.getString("LastName"));
             vtUser.setUserName(rs.getString("UserName"));
             vtUser.setPassword(rs.getString("UserPassword"));
             return vtUser;
