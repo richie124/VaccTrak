@@ -1,10 +1,7 @@
-import React, { useState, useCallback } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useInput } from './hooks/input-hook';
 
-function Create ({ getVaccCenterLatLong }) {
-  const [query, setQuery] = useState("");
+function Create ({ getVaccCenterLatLong, setMarkers, markers, SERVICE_URL, handleClose }) {
   const { value:name, bind:bindName, reset:resetName } = useInput('');
   const { value:address, bind:bindAddress, reset:resetAddress } = useInput('');
   const { value:state, bind:bindState, reset:resetState } = useInput('');
@@ -17,14 +14,40 @@ function Create ({ getVaccCenterLatLong }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const vaccCenter = {
+        "name": name,
         "address": address,
         "city": city,
         "state": state,
-        "zipcode": zipCode
+        "zipcode": zipCode,
+        "latitude": "",
+        "longitude": "",
+        "phoneNumber": phone,
+        "singleDoses": firstVacc,
+        "doubleDoses": secondVacc
     }
 
     const { lat, lng } = await getVaccCenterLatLong(vaccCenter);
-    setQuery(`"${name}", "${address}", "${city}", "${state}", "${zipCode}", "${phone}", ${firstVacc}, ${secondVacc}, "${lat}", "${lng}";`);
+    vaccCenter.latitude = lat;
+    vaccCenter.longitude = lng;
+
+    fetch(SERVICE_URL + '/createVaccCenter/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(vaccCenter),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Add Center - Success:', data);
+      setMarkers([...markers, vaccCenter]);
+      handleClose();
+    })
+    .catch((error) => {
+      console.log('Add Center - Error:', error);
+    });
+
+
     resetName();
     resetAddress();
     resetState();
@@ -39,7 +62,7 @@ function Create ({ getVaccCenterLatLong }) {
     <div>
       <Form onSubmit={handleSubmit}>
                   <Form.Group controlId="centerName">
-                      <Form.Label>VaccCenter:</Form.Label>
+                      <Form.Label>Vaccination Center Name:</Form.Label>
                       <Form.Control type="text" placeholder="Name" {...bindName}/>
                   </Form.Group>
                   <Form.Group controlId="centerAddress">
@@ -63,19 +86,17 @@ function Create ({ getVaccCenterLatLong }) {
                     <Form.Control type="phone" placeholder="Phone Number" {...bindPhone} />
                   </Form.Group>
                   <Form.Group controlId="centerFirstVaccine">
-                    <Form.Label>First Vacc:</Form.Label>
-                    <Form.Control type="numFirstVaccine" placeholder="First Vacc" {...bindFirstVacc} />
+                    <Form.Label>No of Patients with First Dose:</Form.Label>
+                    <Form.Control type="numFirstVaccine" placeholder="First Dose" {...bindFirstVacc} />
                   </Form.Group>
                   <Form.Group controlId="centerSecondVaccine">
-                    <Form.Label>Second Vacc:</Form.Label>
-                    <Form.Control type="numSecondVaccine" placeholder="Second Vacc" {...bindSecondVacc} />
+                    <Form.Label>No of Patients with Second Dose:</Form.Label>
+                    <Form.Control type="numSecondVaccine" placeholder="Second Dose" {...bindSecondVacc} />
                   </Form.Group>
                   <Button variant="primary" type="submit">
                       Submit
                   </Button>
       </Form>
-      <h5>INSERT INTO VaccineSites(VacCenter, Address, City, StateAbbreviation, ZipCode, PhoneNumber, NumFirstVaccine, NumSecondVaccine, Latitude, Longitude) </h5>
-      <h5>{query}</h5>
     </div>
   );
 }

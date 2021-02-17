@@ -1,14 +1,21 @@
-import './App.css';
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useRef, useCallback, useEffect} from 'react';
 import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import Search from './Search';
 import Locate from './Locate';
 import Create from './Create';
+import AddVacc from './AddVacc';
+import StateNumbers from './StateNumbers'
+import Login from './Login'
+import AddUser from './AddUser'
+import useToken from './useToken'
 import {
   getGeocode,
   getLatLng
 } from "use-places-autocomplete";
+import { Modal, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 const SERVICE_URL = "http://localhost:8080/VaccTrak";
 
@@ -26,80 +33,68 @@ const options = {
   disableDefaultUI: true,
   zoomControl: true
 }
-
-var markers2 = [
-    {
-        "id": 52,
-        "name": "Six Flags America Theme Park",
-        "address": "13710 Central Ave.",
-        "city": "Upper Marlboro",
-        "state": "ND",
-        "zipcode": " 20721",
-        "phoneNumber": "N/A",
-        "singleDoses": 10887,
-        "doubleDoses": 10478
-    },
-    {
-        "id": 53,
-        "name": "Holy Cross Hospital",
-        "address": "1500 Forest Glen Road",
-        "city": "Silver Spring",
-        "state": "MD",
-        "zipcode": " 20910",
-        "phoneNumber": "N/A",
-        "singleDoses": 3234,
-        "doubleDoses": 3434
-    },
-    {
-        "id": 54,
-        "name": "Luminis Health Doctors Community Medical Center",
-        "address": "8118 Good Luck Road",
-        "city": " Lanham",
-        "state": "MD",
-        "zipcode": "20706",
-        "phoneNumber": "N/A",
-        "singleDoses": 8766,
-        "doubleDoses": 7654
-    }
-]
+const startZoom = 4.7;
 
 
 function App() {
   const {isLoaded, loadError} = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyAp1BrMA7-YofbC3iJapScTWCpI8GmZm-w",
     libraries: libraries
   })
-  // const [markers, setMarkers] = useState([]);
+
   const [selected, setSelected] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [newCenterShow, setNewCenterShow] = useState(false);
+  const [addVaccShow, setAddVaccShow] = useState(false);
+  const [moreInfoShow, setMoreInfoShow] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [stateChartShow, setStateChartShow] = useState(false);
+  const [loginShow, setLoginShow] = useState(false);
+  const [stateData, setStateData] = useState([]);
+  const {token, setToken} = useToken();
+  const [createUser, setCreateUser] = useState(false);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = useCallback(() => {
+    fetch(SERVICE_URL + "/getAllVaccCenters")
+      .then(data => data.json())
+      .then(data => setMarkers(data));
+
+    fetch(SERVICE_URL + "/getVaccNumbersByState")
+      .then(data => data.json())
+      .then(data => {
+        setStateData(data);
+      });
+  }, []);
 
   const mapRef = useRef();
   const onMapLoad = useCallback(
     (map) => {
       mapRef.current = map;
-      // fetch(SERVICE_URL + "/getAllVaccCenters")
-      // .then(data => data.json())
-      // .then(data => data)
-      // .then(getData(temp).then(data => setMarkers(data)));
-      
-      getData(markers2).then(data => setMarkers(data));
-
     },
     []
   )
 
-  const getData = async (vaccList) => {
-    return Promise.all(vaccList.map((vaccCenter) => 
-        getVaccCenterLatLong(vaccCenter)));
-  }
+  const returnZoom = useCallback(() => {
+    panTo({lat:center.lat, lng: center.lng}, startZoom);
+  }, [])
 
   const panTo = useCallback(
-  ({lat, lng}) => {
+  ({lat, lng}, zoom) => {
     mapRef.current.panTo({lat, lng});
-    mapRef.current.setZoom(14);
-  },
-  [],
-  )
+    mapRef.current.setZoom(zoom);
+    zoom !== startZoom ? setIsZoomed(true) : setIsZoomed(false);
+    console.log(isZoomed);
+    console.log(zoom);
+  })
+
+  const updateMarker = useCallback((updateCenter) => {
+    setSelected(updateCenter);
+    loadData();
+  }, []);
 
   const getVaccCenterLatLong = useCallback(async (vaccCenter) => {
     const address = vaccCenter.address + " " + vaccCenter.city + ", " + vaccCenter.state + " " + vaccCenter.zipcode;
@@ -122,30 +117,86 @@ function App() {
         }
   }, []);
 
+  const handleNewCenterClose = () => setNewCenterShow(false);
+  const handleNewCenterShow = () => setNewCenterShow(true);
+  const handleAddVaccClose = () => setAddVaccShow(false);
+  const handleAddVaccShow = () => setAddVaccShow(true);
+  const handleMoreInfoShow = () => setMoreInfoShow(true);
+  const handleMoreInfoHide = () => setMoreInfoShow(false);
+  const handleStateChartShow = () => setStateChartShow(true);
+  const handleStateChartClose = () => setStateChartShow(false);
+  const handleLoginShow = () => setLoginShow(true);
+  const handleLoginClose = () => setLoginShow(false);
+
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading maps";
 
-  return (<div>
-    <Create getVaccCenterLatLong={getVaccCenterLatLong}/>
-  </div>)
 
   return (<div>
+    <div className="navbar-custom">
+      <img src="logo.png" alt="logo" id="logo"/>
+      <Button onClick={handleStateChartShow} className="stateChartButton"> Numbers by State </Button>
+      <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
+      <Locate panTo={panTo} returnZoom={returnZoom} />
+      <Button onClick={handleLoginShow} className="loginButton"> Login </Button>
+    </div>
 
-    <img src="logo.png" alt="logo" id="logo"/>
-    <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress}/>
-    <Locate panTo={panTo} />
+    <Modal show={stateChartShow} onHide={handleStateChartClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Vaccination Numbers by State</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <StateNumbers stateData={stateData}/>
+        </Modal.Body>
+    </Modal>
+
+    <Modal show={loginShow} onHide={handleLoginClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          { !createUser ? (
+          <Login 
+            setToken={setToken}
+            markers={markers}
+            setMarkers={setMarkers} 
+            handleClose={handleLoginClose}/>) : 
+           (<AddUser />)
+          }
+        </Modal.Body>
+    </Modal>
+
+
+    <Modal show={newCenterShow} onHide={handleNewCenterClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Vaccination Site</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Create getVaccCenterLatLong={getVaccCenterLatLong} setMarkers={setMarkers} markers={markers} SERVICE_URL={SERVICE_URL} handleClose={handleNewCenterClose}/>
+        </Modal.Body>
+    </Modal>
+
+    <Modal show={addVaccShow} onHide={handleAddVaccClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Vaccinations</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <AddVacc handleClose={handleAddVaccClose} SERVICE_URL={SERVICE_URL} vaccCenter={selected} updateMarker={updateMarker}/>
+        </Modal.Body>
+    </Modal>
 
     <GoogleMap 
     mapContainerStyle={mapContainerStyle}
-    zoom={4.7}
+    zoom={startZoom}
     center={center}
     options={options}
     onLoad={onMapLoad}>
       {markers.map((marker, i) => 
         <Marker 
           key={i} 
-          position={{lat: marker.lat, lng: marker.lng}}
+          position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)}}
           onClick={() => {
+            panTo({lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)}, 14);
             setSelected(marker);
           }}
         />
@@ -153,10 +204,34 @@ function App() {
 
       {selected ? (
         <InfoWindow 
-        position={{lat: selected.lat, lng: selected.lng}} 
-        onCloseClick={() => setSelected(null)}>
+        position={{lat: parseFloat(selected.latitude), lng: parseFloat(selected.longitude)}} 
+        onCloseClick={() => {
+          setSelected(null);
+          handleMoreInfoHide();
+          }}>
           <div>
-            <h3>{selected.name}</h3>
+            <div>
+              <h6>{selected.name}</h6>
+              <div className="seeMore">
+                { moreInfoShow ? 
+                  <div id="info">
+                  <div>
+                    {selected.address}
+                  </div>
+                  <div>
+                    {selected.city}, {selected.state} {selected.zipcode}
+                  </div>
+                  <div>
+                    {selected.phoneNumber}
+                  </div>
+                  <button onClick={handleMoreInfoHide} className="moreHide">Hide...</button>
+                </div>
+                :  
+                <button onClick={handleMoreInfoShow} className="moreHide">See more info...</button>
+              }
+              </div>
+            </div>
+            <hr />
             <div>
               <div>
                 1st Dose: {selected.singleDoses}
@@ -164,9 +239,15 @@ function App() {
               <div>
                 2nd Dose: {selected.doubleDoses}
               </div>
-              <hr />
+              
               Total Vaccinated: {selected.singleDoses + selected.doubleDoses}
             </div>
+            <hr />
+            { token ? 
+            (<div className="infoEditBar">
+              <Button onClick={handleAddVaccShow}>Add Vaccinations</Button>
+            </div>) : null
+            }
           </div>
         </InfoWindow>
       ) : null}
