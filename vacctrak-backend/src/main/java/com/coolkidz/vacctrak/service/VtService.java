@@ -135,6 +135,11 @@ public class VtService implements VtServiceInterface {
         return null;
     }
 
+    @Override
+    public List<Integer> insertPerms(VtUser user) {
+        return vtPermsDao.setPerms(user);
+    }
+
     private String encryptPsswd(String input) {
         try {
             // getInstance() method is called with algorithm SHA-512

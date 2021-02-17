@@ -24,6 +24,8 @@ public class VtDbPermsDao implements VtPermsDao {
     @Override
     public List<Integer> setPerms(VtUser user) {
 
+        //deletePerms(user);
+
         List<Integer> vaccCenterPerms = user.getVaccCenterAccesses();
         for (int i = 0; i < vaccCenterPerms.size(); i++) {
 
@@ -47,6 +49,11 @@ public class VtDbPermsDao implements VtPermsDao {
         }
 
         return getPermsByUserId(user.getId());
+    }
+
+    private boolean deletePerms(VtUser user) {
+        final String sql = "DELETE FROM permissions WHERE UserId = ?;";
+        return jdbc.update(sql, user.getId()) > 0;
     }
 
     @Override

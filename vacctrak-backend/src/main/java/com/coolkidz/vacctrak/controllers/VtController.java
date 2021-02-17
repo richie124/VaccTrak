@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,9 @@ public class VtController {
     public VaccCenter createVaccCenter(@RequestBody VaccCenter vaccCenter) {
         return VtSi.createVaccCenter(vaccCenter);
     }
+//    public VaccCenter createVaccCenter(@RequestBody HashMap<String, String> vaccCenter) {
+//        return VtSi.createVaccCenter(vaccCenter);
+//    }
 
     @PutMapping("/UpdateDoses")
     public ResponseEntity updateVaccDoses(@RequestBody VaccCenter vaccCenter) {
@@ -68,8 +72,12 @@ public class VtController {
 
     // Returns a list of all VaccCenters of the searched-for state
     @GetMapping("/AllVaccCenters/{StateAbbr}")
-    public List<VaccCenter> findRoundById(@PathVariable String StateAbbr) {
-        return VtSi.getVaccCenterByState(StateAbbr);
+    public ResponseEntity<List<VaccCenter>> findRoundById(@PathVariable String StateAbbr) {
+        List<VaccCenter> result =  VtSi.getVaccCenterByState(StateAbbr);
+        if (result.isEmpty()) {
+            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping()
