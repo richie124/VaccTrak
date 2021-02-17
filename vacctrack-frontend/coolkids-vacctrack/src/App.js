@@ -8,7 +8,7 @@ import AddVacc from './AddVacc';
 import StateNumbers from './StateNumbers'
 import Login from './Login'
 import AddUser from './AddUser'
-import useToken from './useToken'
+import useToken from './hooks/useToken'
 import {
   getGeocode,
   getLatLng
@@ -51,8 +51,9 @@ function App() {
   const [stateChartShow, setStateChartShow] = useState(false);
   const [loginShow, setLoginShow] = useState(false);
   const [stateData, setStateData] = useState([]);
-  const {token, setToken, logOut} = useToken();
+  const {getToken, setToken, logOut} = useToken();
   const [createUser, setCreateUser] = useState(false);
+  const [vaccCenters, setVaccCenters] = useState([]);
 
   useEffect(() => {
     loadData();
@@ -61,7 +62,11 @@ function App() {
   const loadData = useCallback(() => {
     fetch(SERVICE_URL + "/getAllVaccCenters")
       .then(data => data.json())
-      .then(data => setMarkers(data));
+      .then(data => {
+        !!getToken() ? setMarkers(data.filter(marker => getToken().vaccCenterAccesses.indexOf(marker.id) >= 0)):
+        setMarkers(data);
+        setVaccCenters(data);
+      });
 
     fetch(SERVICE_URL + "/getVaccNumbersByState")
       .then(data => data.json())
@@ -127,6 +132,10 @@ function App() {
   const handleStateChartClose = () => setStateChartShow(false);
   const handleLoginShow = () => setLoginShow(true);
   const handleLoginClose = () => setLoginShow(false);
+  const handleLogOut = () => {
+    logOut();
+    setMarkers(vaccCenters);
+  }
 
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading maps";
@@ -138,7 +147,7 @@ function App() {
       <Button onClick={handleStateChartShow} className="stateChartButton"> Numbers by State </Button>
       <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
       <Locate panTo={panTo} returnZoom={returnZoom} />
-      {token ? (<Button onClick={logOut} className="loginButton"> LogOut </Button>) : (<Button onClick={handleLoginShow} className="loginButton"> Login </Button>)}
+      {getToken() ? (<Button onClick={handleLogOut} className="loginButton"> LogOut </Button>) : (<Button onClick={handleLoginShow} className="loginButton"> Login </Button>)}
     </div>
 
     <Modal show={stateChartShow} onHide={handleStateChartClose}>
@@ -166,7 +175,7 @@ function App() {
             SERVICE_URL={SERVICE_URL} 
             handleClose={handleLoginClose}
             setCreateUser={setCreateUser}
-            vaccCenters={markers}/>)
+            vaccCenters={vaccCenters}/>)
           }
         </Modal.Body>
     </Modal>
@@ -201,7 +210,7 @@ function App() {
           key={i} 
           position={{lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)}}
           onClick={() => {
-            panTo({lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)}, 14);
+            // panTo({lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)}, 14);
             setSelected(marker);
           }}
         />
@@ -246,9 +255,9 @@ function App() {
               </div>
               
               Total Vaccinated: {selected.singleDoses + selected.doubleDoses}
-            </div>
+            </div> 
             <hr />
-            { token ? 
+            { getToken() ? 
             (<div className="infoEditBar">
               <Button onClick={handleAddVaccShow}>Add Vaccinations</Button>
             </div>) : null
