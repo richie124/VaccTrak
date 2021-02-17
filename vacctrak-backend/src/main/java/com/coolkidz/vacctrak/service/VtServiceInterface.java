@@ -6,12 +6,14 @@ import com.coolkidz.vacctrak.models.VtUser;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public interface VtServiceInterface {
 
-    public VaccCenter createVaccCenter(VaccCenter newVaccCenter);
+//    public VaccCenter createVaccCenter(VaccCenter newVaccCenter);
+    public VaccCenter createVaccCenter(HashMap newVaccCenter);
 
     public List<VaccCenter> getAllVaccCenters();
 
