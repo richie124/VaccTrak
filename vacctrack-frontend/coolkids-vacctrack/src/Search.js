@@ -9,7 +9,7 @@ import {
 } from '@reach/combobox';
 import '@reach/combobox/styles.css';
 
-function Search({getLatLngFromAddress, panTo, handleShow, token}) {
+function Search({getLatLngFromAddress, panTo, handleShow, getToken}) {
   const {
     ready, 
     value, 
@@ -28,7 +28,7 @@ function Search({getLatLngFromAddress, panTo, handleShow, token}) {
   return (
     <div className="search">
       <div className="center addVaccSite">
-      { token ?
+      { getToken() ?
       (
         <span>Don't see your vaccination site listed? <button id="clickHere" onClick={handleShow}>Click here!</button></span>
       ) : '-'
