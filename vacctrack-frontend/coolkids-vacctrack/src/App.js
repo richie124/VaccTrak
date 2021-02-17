@@ -51,7 +51,7 @@ function App() {
   const [stateChartShow, setStateChartShow] = useState(false);
   const [loginShow, setLoginShow] = useState(false);
   const [stateData, setStateData] = useState([]);
-  const {token, setToken} = useToken();
+  const {token, setToken, logOut} = useToken();
   const [createUser, setCreateUser] = useState(false);
 
   useEffect(() => {
@@ -138,7 +138,7 @@ function App() {
       <Button onClick={handleStateChartShow} className="stateChartButton"> Numbers by State </Button>
       <Search panTo={panTo} getLatLngFromAddress={getLatLngFromAddress} handleShow={handleNewCenterShow}/>
       <Locate panTo={panTo} returnZoom={returnZoom} />
-      <Button onClick={handleLoginShow} className="loginButton"> Login </Button>
+      {token ? (<Button onClick={logOut} className="loginButton"> LogOut </Button>) : (<Button onClick={handleLoginShow} className="loginButton"> Login </Button>)}
     </div>
 
     <Modal show={stateChartShow} onHide={handleStateChartClose}>
@@ -160,8 +160,13 @@ function App() {
             setToken={setToken}
             markers={markers}
             setMarkers={setMarkers} 
-            handleClose={handleLoginClose}/>) : 
-           (<AddUser />)
+            handleClose={handleLoginClose}
+            setCreateUser={setCreateUser}/>) : 
+           (<AddUser 
+            SERVICE_URL={SERVICE_URL} 
+            handleClose={handleLoginClose}
+            setCreateUser={setCreateUser}
+            vaccCenters={markers}/>)
           }
         </Modal.Body>
     </Modal>

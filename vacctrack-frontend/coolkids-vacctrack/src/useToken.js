@@ -11,8 +11,12 @@ export default function useToken() {
     sessionStorage.setItem('token', JSON.stringify(userToken));
     setToken(userToken.token);
   };
+  const logOut = () => {
+    sessionStorage.setToken(null);
+  }
   return {
     setToken: saveToken,
-    token
+    token,
+    logOut
   }
 }
