@@ -56,17 +56,15 @@ function AddUser ({  SERVICE_URL, setCreateUser, vaccCenters }) {
     .then(response => response.json())
     .then(data => {
       console.log('Add User - Success:', data);
-      
+      resetUsername();
+      resetPassword();
+      resetPassword2();
       setCreateUser(false);
     })
     .catch((error) => {
       console.log('Add User - Error:', error);
+      setFormErrors({username: "The username you entered has already been selected, please select a different username."});
     });
-
-
-    resetUsername();
-    resetPassword();
-    resetPassword2();
   }
   
   const handleSelect = (selectedList, selectedItem) => {
