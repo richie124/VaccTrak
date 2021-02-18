@@ -9,6 +9,7 @@ import com.coolkidz.vacctrak.models.VaccCenter;
 import com.coolkidz.vacctrak.models.VtUser;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -166,13 +167,10 @@ public class VtService implements VtServiceInterface {
     }
 
     @Override
+    @Transactional
     public List<Integer> updatePerms(VtUser user) {
-        if (vtPermsDao.deletePerms(user)){
-            return vtPermsDao.setPerms(user);
-        }
-
-        // if user's perms could not be deleted
-        return null;
+        vtPermsDao.deletePerms(user);
+        return vtPermsDao.setPerms(user);
     }
 
     private String encryptPsswd(String input) {
