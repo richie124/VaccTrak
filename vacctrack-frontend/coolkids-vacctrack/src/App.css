@@ -110,10 +110,16 @@
   border: none;
 }
 
-.moreHide {
+.moreHide,
+.backButton {
   background: none;
   border: none;
   text-decoration: underline;
+}
+
+.backButton {
+  float: right;
+  padding-top: 0.75rem;
 }
 
 .navbar-custom {
