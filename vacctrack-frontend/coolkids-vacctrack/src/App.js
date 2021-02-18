@@ -176,7 +176,8 @@ function App() {
             markers={markers}
             setMarkers={setMarkers} 
             handleClose={handleLoginClose}
-            setCreateUser={setCreateUser}/>) : 
+            setCreateUser={setCreateUser}
+            SERVICE_URL={SERVICE_URL}/>) : 
            (<AddUser 
             SERVICE_URL={SERVICE_URL} 
             handleClose={handleLoginClose}
