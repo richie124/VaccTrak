@@ -11,9 +11,9 @@ Steps to get API running:
   <li>Run the Java SpringBoot application in /vacctrak-backend</li>
 </ol>
 
-frontEnd: 
-install react-bootstrap
-install multiselect-react-dropdown
-
-
+To run the website:
+<ol> 
+  <li>run "npm install" in the "/vacctrak-frontend/coolkids-vacctrack/" directory.</li>
+  <li>run "npm start" to start server.</li>
+</ol>
 
