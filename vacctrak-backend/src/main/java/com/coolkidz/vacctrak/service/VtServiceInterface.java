@@ -32,6 +32,6 @@ public interface VtServiceInterface {
 
     public VtUser validateUser(VtUser user) throws NoSuchAlgorithmException, InvalidKeySpecException;
 
-    public List<Integer> insertPerms(VtUser user);
+    public List<Integer> updatePerms(VtUser user);
 
 }

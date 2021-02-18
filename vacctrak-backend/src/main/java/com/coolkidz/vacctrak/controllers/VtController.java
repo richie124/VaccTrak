@@ -89,7 +89,7 @@ public class VtController {
 // Get all --- done :)
 // get by vacc center --- Done :)
 // get vaccination centers by state --- done :)
-// Get single and double doses by state --- returns a jsonified map
+// Get single and double doses by state --- returns state objects :)
 
 // Create vacc center --- done :)
 // update single/double doses --- :)
@@ -101,17 +101,6 @@ public class VtController {
 // just the react files we created
 // just the java files we created + pom
 
-
-// Where we're at:
-    // Gathered a bunch of data for real sites
-    // built out most of the backend for the public centric portal
-    // Mostly have the map api up and running
-// fun level: 6
-// stress level: 3
-// project completion 35%
-// Blockers: Gathering up the data is time consuming
-//           We're having difficulties mapping the centers on google map api becuase it only takes lat/long
-//
 // LOGIN
 // pass in user id, vacCenter id
 
@@ -122,3 +111,18 @@ public class VtController {
 // Error handling
 // User should only be created if username is unique
 // Figure out how to catch errors etc
+
+
+// change endpoint to UpdatePermissions
+// will take in array of all new user permissions
+// delete all permissions for user
+// insert all new permissions for user
+
+// a smooth presentation
+// pretend David is a client
+// intro group
+// why we built app
+// what technologies we used
+// demo
+// lessons learned
+// questions?

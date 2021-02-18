@@ -166,8 +166,13 @@ public class VtService implements VtServiceInterface {
     }
 
     @Override
-    public List<Integer> insertPerms(VtUser user) {
-        return vtPermsDao.setPerms(user);
+    public List<Integer> updatePerms(VtUser user) {
+        if (vtPermsDao.deletePerms(user)){
+            return vtPermsDao.setPerms(user);
+        }
+
+        // if user's perms could not be deleted
+        return null;
     }
 
     private String encryptPsswd(String input) {
