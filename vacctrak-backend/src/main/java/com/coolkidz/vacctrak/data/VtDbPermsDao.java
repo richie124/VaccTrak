@@ -51,7 +51,8 @@ public class VtDbPermsDao implements VtPermsDao {
         return getPermsByUserId(user.getId());
     }
 
-    private boolean deletePerms(VtUser user) {
+    @Override
+    public boolean deletePerms(VtUser user) {
         final String sql = "DELETE FROM permissions WHERE UserId = ?;";
         return jdbc.update(sql, user.getId()) > 0;
     }
