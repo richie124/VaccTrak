@@ -22,8 +22,8 @@ function Create ({ getVaccCenterLatLong, setMarkers, markers, SERVICE_URL, handl
         "latitude": "",
         "longitude": "",
         "phoneNumber": phone,
-        "singleDoses": firstVacc,
-        "doubleDoses": secondVacc
+        "singleDoses": parseInt(firstVacc),
+        "doubleDoses": parseInt(secondVacc)
     }
 
     const { lat, lng } = await getVaccCenterLatLong(vaccCenter);
