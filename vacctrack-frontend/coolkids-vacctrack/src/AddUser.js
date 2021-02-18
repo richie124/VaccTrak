@@ -7,7 +7,7 @@ function AddUser ({  SERVICE_URL, setCreateUser, vaccCenters }) {
   const { value:username, bind:bindUsername, reset:resetUsername } = useInput('');
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput('');
   const { value:password2, bind:bindPassword2, reset:resetPassword2 } = useInput('');
-  const [vaccCenterAccesses, setVaccCenterAccesses] = useState([])
+  const [vaccCenterAccesses, setVaccCenterAccesses] = useState([]);
   const [formErrors, setFormErrors] = useState({});
 
   const validateForm = (user) => {
@@ -56,17 +56,15 @@ function AddUser ({  SERVICE_URL, setCreateUser, vaccCenters }) {
     .then(response => response.json())
     .then(data => {
       console.log('Add User - Success:', data);
-      
+      resetUsername();
+      resetPassword();
+      resetPassword2();
       setCreateUser(false);
     })
     .catch((error) => {
       console.log('Add User - Error:', error);
+      setFormErrors({username: "The username you entered has already been selected, please select a different username."});
     });
-
-
-    resetUsername();
-    resetPassword();
-    resetPassword2();
   }
   
   const handleSelect = (selectedList, selectedItem) => {
@@ -110,6 +108,7 @@ function AddUser ({  SERVICE_URL, setCreateUser, vaccCenters }) {
                   <Button variant="primary" type="submit">
                       Submit
                   </Button>
+                  <button className="backButton" onClick={()=>setCreateUser(false)}> Return to Login</button>
       </Form>
     </div>
   );
