@@ -108,6 +108,7 @@ function AddUser ({  SERVICE_URL, setCreateUser, vaccCenters }) {
                   <Button variant="primary" type="submit">
                       Submit
                   </Button>
+                  <Button onClick={()=>setCreateUser(false)}> Return to Login</Button>
       </Form>
     </div>
   );

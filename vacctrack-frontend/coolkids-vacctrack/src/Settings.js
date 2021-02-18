@@ -4,19 +4,9 @@ import { Multiselect } from 'multiselect-react-dropdown';
 
 function Settings({vaccCenters, getToken, setToken, SERVICE_URL, setMarkers, handleClose}) {
   const [vaccCenterAccesses, setVaccCenterAccesses] = useState(vaccCenters.filter(center => getToken().vaccCenterAccesses.indexOf(center.id) >= 0));
-  const [newAccesses, setNewAccesses] = useState([]);
 
   const handleSelect = (selectedList, selectedItem) => {
     setVaccCenterAccesses(selectedList);
-    setNewAccesses([...newAccesses, selectedItem.id]);
-  }
-
-  const handleRemove = (selectedList, removedItem) => {
-    setVaccCenterAccesses(selectedList);
-    const index = newAccesses.indexOf(removedItem.id);
-    var access = newAccesses;
-    access.splice(index, 1);
-    setNewAccesses(access);
   }
 
   const handleSubmit = async (e) => {
@@ -25,10 +15,10 @@ function Settings({vaccCenters, getToken, setToken, SERVICE_URL, setMarkers, han
     
     const accessObject = {
         "id": token.id,
-        "vaccCenterAccesses": newAccesses
+        "vaccCenterAccesses": vaccCenterAccesses.map(center => center.id)
     };
 
-    fetch(SERVICE_URL + '/AdminPortal/AddPermissions', {
+    fetch(SERVICE_URL + '/AdminPortal/UpdatePermissions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +47,7 @@ function Settings({vaccCenters, getToken, setToken, SERVICE_URL, setMarkers, han
           options={vaccCenters}
           selectedValues={vaccCenterAccesses}
           onSelect={handleSelect}
-          onRemove={handleRemove}
+          onRemove={handleSelect}
           displayValue="name"/>
         </Form.Group>
         <Button variant="primary" type="submit">
