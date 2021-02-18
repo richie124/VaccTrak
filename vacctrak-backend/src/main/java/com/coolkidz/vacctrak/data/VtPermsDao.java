@@ -11,5 +11,5 @@ public interface VtPermsDao {
 
     public List<Integer> getPermsByUserId(int userId);
 
-    public boolean deletePerms(VtUser user);
+    public int deletePerms(VtUser user);
 }
