@@ -10,4 +10,6 @@ public interface VtPermsDao {
     public List<Integer> setPerms(VtUser user);
 
     public List<Integer> getPermsByUserId(int userId);
+
+    public boolean deletePerms(VtUser user);
 }

@@ -42,9 +42,9 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/AddPermissions")
+    @PostMapping("/UpdatePermissions")
     public ResponseEntity<List<Integer>> updatePerms(@RequestBody VtUser user) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        List<Integer> response = VtSi.insertPerms(user);
+        List<Integer> response = VtSi.updatePerms(user);
         if (response == null) {
             return new ResponseEntity(null, HttpStatus.NOT_FOUND);
         }
