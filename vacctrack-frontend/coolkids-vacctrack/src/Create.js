@@ -1,7 +1,7 @@
 import { Form, Button } from 'react-bootstrap';
 import { useInput } from './hooks/input-hook';
 
-function Create ({ getVaccCenterLatLong, setMarkers, markers, SERVICE_URL, handleClose }) {
+function Create ({ getVaccCenterLatLong, setMarkers, markers, SERVICE_URL, handleClose, setVaccCenters, vaccCenters }) {
   const { value:name, bind:bindName, reset:resetName } = useInput('');
   const { value:address, bind:bindAddress, reset:resetAddress } = useInput('');
   const { value:state, bind:bindState, reset:resetState } = useInput('');
@@ -41,6 +41,7 @@ function Create ({ getVaccCenterLatLong, setMarkers, markers, SERVICE_URL, handl
     .then(data => {
       console.log('Add Center - Success:', data);
       setMarkers([...markers, vaccCenter]);
+      setVaccCenters([...vaccCenters, vaccCenter]);
       handleClose();
     })
     .catch((error) => {

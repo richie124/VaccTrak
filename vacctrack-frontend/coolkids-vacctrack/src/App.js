@@ -193,7 +193,7 @@ function App() {
           <Modal.Title>Add Vaccination Site</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Create getVaccCenterLatLong={getVaccCenterLatLong} setMarkers={setMarkers} markers={markers} SERVICE_URL={SERVICE_URL} handleClose={handleNewCenterClose}/>
+          <Create getVaccCenterLatLong={getVaccCenterLatLong} setMarkers={setMarkers} markers={markers} SERVICE_URL={SERVICE_URL} handleClose={handleNewCenterClose} setVaccCenters={setVaccCenters} vaccCenters={vaccCenters}/>
         </Modal.Body>
     </Modal>
 
